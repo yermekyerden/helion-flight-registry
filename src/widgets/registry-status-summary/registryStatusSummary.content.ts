@@ -7,7 +7,6 @@ export const registryStatusSummaryContent = {
   },
   activeDossiersStatus: {
     title: 'Active dossiers',
-    value: '0',
   },
   clearanceNodeStatus: {
     title: 'Clearance node',

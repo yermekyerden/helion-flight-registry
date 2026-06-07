@@ -1,3 +1,5 @@
+import { selectActiveFlightDossierCount } from '../../entities/flight-application/model/flightApplicationStore.selectors';
+import { useFlightApplicationStore } from '../../entities/flight-application/model/flightApplicationStore';
 import { registryStatusSummaryContent as content } from './registryStatusSummary.content';
 
 type RegistryStatusCardContent = {
@@ -18,10 +20,16 @@ const style = {
 } as const;
 
 export function RegistryStatusSummary() {
+  const activeDossierCount = useFlightApplicationStore(
+    selectActiveFlightDossierCount,
+  );
+
+  const activeDossiersStatus = createActiveDossiersStatus(activeDossierCount);
+
   return (
     <section className={style.layout}>
       <RegistryStatusCard status={content.protocolStatus} />
-      <RegistryStatusCard status={content.activeDossiersStatus} />
+      <RegistryStatusCard status={activeDossiersStatus} />
       <RegistryStatusCard status={content.clearanceNodeStatus} />
     </section>
   );
@@ -34,4 +42,13 @@ function RegistryStatusCard({ status }: RegistryStatusCardProps) {
       <p className={style.value}>{status.value}</p>
     </article>
   );
+}
+
+function createActiveDossiersStatus(
+  activeDossierCount: number,
+): RegistryStatusCardContent {
+  return {
+    title: content.activeDossiersStatus.title,
+    value: activeDossierCount.toString(),
+  };
 }
