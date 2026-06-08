@@ -1,3 +1,10 @@
+export const identityMarkers = [
+  'Female',
+  'Male',
+  'Other',
+  'Prefer not to disclose',
+] as const;
+
 export const originSectors = [
   'Sol Core',
   'Orion Frontier',

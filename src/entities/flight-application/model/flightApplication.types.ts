@@ -1,5 +1,6 @@
 import type {
   flightPurposes,
+  identityMarkers,
   originAuthorities,
   originSectors,
   vesselClasses,
@@ -15,11 +16,7 @@ export type VesselClass = (typeof vesselClasses)[number];
 
 export type FlightPurpose = (typeof flightPurposes)[number];
 
-export type IdentityMarker =
-  | 'Female'
-  | 'Male'
-  | 'Other'
-  | 'Prefer not to disclose';
+export type IdentityMarker = (typeof identityMarkers)[number];
 
 export type FlightApplicationProtocol = 'legacy' | 'assisted';
 
