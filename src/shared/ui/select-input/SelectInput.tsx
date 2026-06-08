@@ -1,8 +1,8 @@
-import type { SelectHTMLAttributes } from 'react';
+import type { ComponentPropsWithRef } from 'react';
 
 import { cn } from '@/shared/lib/class-name/cn';
 
-type SelectInputProps = SelectHTMLAttributes<HTMLSelectElement>;
+type SelectInputProps = ComponentPropsWithRef<'select'>;
 
 const style = {
   select:

@@ -1,8 +1,8 @@
-import type { InputHTMLAttributes } from 'react';
+import type { ComponentPropsWithRef } from 'react';
 
 import { cn } from '@/shared/lib/class-name/cn';
 
-type FileInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>;
+type FileInputProps = Omit<ComponentPropsWithRef<'input'>, 'type'>;
 
 const style = {
   input:

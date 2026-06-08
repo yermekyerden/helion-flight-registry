@@ -1,10 +1,10 @@
-import type { InputHTMLAttributes, ReactNode } from 'react';
+import type { ComponentPropsWithRef, ReactNode } from 'react';
 
 import { cn } from '@/shared/lib/class-name/cn';
 
 type CheckboxFieldProps = Omit<
-  InputHTMLAttributes<HTMLInputElement>,
-  'type'
+  ComponentPropsWithRef<'input'>,
+  'children' | 'type'
 > & {
   children: ReactNode;
   error?: string;

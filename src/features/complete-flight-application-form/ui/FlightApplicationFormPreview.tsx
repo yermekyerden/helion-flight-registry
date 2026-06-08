@@ -1,228 +1,39 @@
 import { useState, type ChangeEvent } from 'react';
 
-import {
-  flightPurposes,
-  identityMarkers,
-  originAuthorities,
-  originSectors,
-  vesselClasses,
-} from '@/shared/config/flightApplicationOptions';
-import { formLimits } from '@/shared/config/formLimits';
-import { CheckboxField } from '@/shared/ui/checkbox-field/CheckboxField';
-import { FileInput } from '@/shared/ui/file-input/FileInput';
-import { FormField } from '@/shared/ui/form-field/FormField';
-import { FormSection } from '@/shared/ui/form-section/FormSection';
-import { NumberInput } from '@/shared/ui/number-input/NumberInput';
-import { PasswordInput } from '@/shared/ui/password-input/PasswordInput';
-import { SelectInput } from '@/shared/ui/select-input/SelectInput';
-import { TextInput } from '@/shared/ui/text-input/TextInput';
-
-import { flightApplicationFormContent as content } from '../model/flightApplicationForm.content';
-import { PassphraseIntegrityPanel } from './PassphraseIntegrityPanel';
-
-const acceptedImageMimeTypes = formLimits.image.acceptedMimeTypes.join(',');
+import { FlightRequestFormSection } from './sections/FlightRequestFormSection';
+import { OriginRegistryFormSection } from './sections/OriginRegistryFormSection';
+import { PilotIdentityFormSection } from './sections/PilotIdentityFormSection';
+import { SecurityClearanceFormSection } from './sections/SecurityClearanceFormSection';
+import { VesselProfileFormSection } from './sections/VesselProfileFormSection';
 
 const style = {
   stack: 'space-y-5',
-  fullWidth: 'md:col-span-2',
 } as const;
 
 export function FlightApplicationFormPreview() {
-  return (
-    <div className={style.stack}>
-      <PilotIdentitySection />
-      <OriginRegistrySection />
-      <VesselProfileSection />
-      <FlightRequestSection />
-      <SecurityClearanceSection />
-    </div>
-  );
-}
-
-function PilotIdentitySection() {
-  return (
-    <FormSection
-      description={content.sections.pilotIdentity.description}
-      title={content.sections.pilotIdentity.title}
-    >
-      <FormField label={content.fields.name.label}>
-        <TextInput
-          maxLength={formLimits.name.maxLength}
-          placeholder={content.fields.name.placeholder}
-        />
-      </FormField>
-
-      <FormField label={content.fields.age.label}>
-        <NumberInput
-          max={formLimits.age.max}
-          min={formLimits.age.min}
-          placeholder={content.fields.age.placeholder}
-        />
-      </FormField>
-
-      <div className={style.fullWidth}>
-        <FormField
-          hint={content.fields.email.hint}
-          label={content.fields.email.label}
-        >
-          <TextInput placeholder={content.fields.email.placeholder} />
-        </FormField>
-      </div>
-
-      <FormField label={content.fields.gender.label}>
-        <SelectInput defaultValue="">
-          <SelectPlaceholder />
-          <SelectOptions options={identityMarkers} />
-        </SelectInput>
-      </FormField>
-
-      <div className={style.fullWidth}>
-        <FormField
-          hint={content.fields.pilotPhoto.hint}
-          label={content.fields.pilotPhoto.label}
-        >
-          <FileInput accept={acceptedImageMimeTypes} />
-        </FormField>
-      </div>
-    </FormSection>
-  );
-}
-
-function OriginRegistrySection() {
-  return (
-    <FormSection
-      description={content.sections.originRegistry.description}
-      title={content.sections.originRegistry.title}
-    >
-      <FormField label={content.fields.originSector.label}>
-        <SelectInput defaultValue="">
-          <SelectPlaceholder />
-          <SelectOptions options={originSectors} />
-        </SelectInput>
-      </FormField>
-
-      <FormField label={content.fields.originWorld.label}>
-        <TextInput
-          maxLength={formLimits.originWorld.maxLength}
-          placeholder={content.fields.originWorld.placeholder}
-        />
-      </FormField>
-
-      <div className={style.fullWidth}>
-        <FormField
-          hint={content.fields.country.hint}
-          label={content.fields.country.label}
-        >
-          <SelectInput defaultValue="">
-            <SelectPlaceholder />
-            <SelectOptions options={originAuthorities} />
-          </SelectInput>
-        </FormField>
-      </div>
-    </FormSection>
-  );
-}
-
-function VesselProfileSection() {
-  return (
-    <FormSection
-      description={content.sections.vesselProfile.description}
-      title={content.sections.vesselProfile.title}
-    >
-      <FormField label={content.fields.vesselName.label}>
-        <TextInput
-          maxLength={formLimits.vesselName.maxLength}
-          placeholder={content.fields.vesselName.placeholder}
-        />
-      </FormField>
-
-      <FormField label={content.fields.vesselClass.label}>
-        <SelectInput defaultValue="">
-          <SelectPlaceholder />
-          <SelectOptions options={vesselClasses} />
-        </SelectInput>
-      </FormField>
-
-      <FormField label={content.fields.crewCapacity.label}>
-        <NumberInput
-          max={formLimits.crewCapacity.max}
-          min={formLimits.crewCapacity.min}
-          placeholder={content.fields.crewCapacity.placeholder}
-        />
-      </FormField>
-
-      <FormField
-        hint={content.fields.callsign.hint}
-        label={content.fields.callsign.label}
-      >
-        <TextInput
-          maxLength={formLimits.callsign.maxLength}
-          placeholder={content.fields.callsign.placeholder}
-        />
-      </FormField>
-    </FormSection>
-  );
-}
-
-function FlightRequestSection() {
-  return (
-    <FormSection
-      description={content.sections.flightRequest.description}
-      title={content.sections.flightRequest.title}
-    >
-      <FormField label={content.fields.destinationSector.label}>
-        <SelectInput defaultValue="">
-          <SelectPlaceholder />
-          <SelectOptions options={originSectors} />
-        </SelectInput>
-      </FormField>
-
-      <FormField label={content.fields.flightPurpose.label}>
-        <SelectInput defaultValue="">
-          <SelectPlaceholder />
-          <SelectOptions options={flightPurposes} />
-        </SelectInput>
-      </FormField>
-    </FormSection>
-  );
-}
-
-function SecurityClearanceSection() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   return (
-    <FormSection
-      description={content.sections.securityClearance.description}
-      title={content.sections.securityClearance.title}
-    >
-      <FormField label={content.fields.password.label}>
-        <PasswordInput
-          onChange={handlePasswordChange}
-          placeholder={content.fields.password.placeholder}
-          value={password}
-        />
-      </FormField>
+    <div className={style.stack}>
+      <PilotIdentityFormSection />
+      <OriginRegistryFormSection />
+      <VesselProfileFormSection />
+      <FlightRequestFormSection />
 
-      <FormField label={content.fields.confirmPassword.label}>
-        <PasswordInput
-          onChange={handleConfirmPasswordChange}
-          placeholder={content.fields.confirmPassword.placeholder}
-          value={confirmPassword}
-        />
-      </FormField>
-
-      <div className={style.fullWidth}>
-        <PassphraseIntegrityPanel
-          confirmPassword={confirmPassword}
-          password={password}
-        />
-      </div>
-
-      <div className={style.fullWidth}>
-        <CheckboxField>{content.fields.acceptedTerms.label}</CheckboxField>
-      </div>
-    </FormSection>
+      <SecurityClearanceFormSection
+        confirmPassword={confirmPassword}
+        confirmPasswordInputProps={{
+          onChange: handleConfirmPasswordChange,
+          value: confirmPassword,
+        }}
+        password={password}
+        passwordInputProps={{
+          onChange: handlePasswordChange,
+          value: password,
+        }}
+      />
+    </div>
   );
 
   function handlePasswordChange(event: ChangeEvent<HTMLInputElement>) {
@@ -232,24 +43,4 @@ function SecurityClearanceSection() {
   function handleConfirmPasswordChange(event: ChangeEvent<HTMLInputElement>) {
     setConfirmPassword(event.target.value);
   }
-}
-
-type SelectOptionsProps = {
-  options: readonly string[];
-};
-
-function SelectOptions({ options }: SelectOptionsProps) {
-  return options.map((option) => (
-    <option key={option} value={option}>
-      {option}
-    </option>
-  ));
-}
-
-function SelectPlaceholder() {
-  return (
-    <option disabled value="">
-      {content.selectPlaceholder}
-    </option>
-  );
 }
