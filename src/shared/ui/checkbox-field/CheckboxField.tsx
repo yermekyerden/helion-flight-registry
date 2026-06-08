@@ -1,6 +1,7 @@
 import type { ComponentPropsWithRef, ReactNode } from 'react';
 
 import { cn } from '@/shared/lib/class-name/cn';
+import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
 
 type CheckboxFieldProps = Omit<
   ComponentPropsWithRef<'input'>,
@@ -11,11 +12,10 @@ type CheckboxFieldProps = Omit<
 };
 
 const style = {
-  label:
-    'flex items-start gap-3 rounded-2xl border border-zinc-300 bg-white p-4 text-sm leading-6 text-zinc-700 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-300',
+  label: 'flex items-start gap-3 rounded-2xl border p-4 text-sm leading-6',
   checkbox:
-    'mt-1 h-4 w-4 rounded border-zinc-300 text-amber-600 focus:ring-amber-500 dark:border-slate-600',
-  error: 'mt-2 text-xs leading-5 text-red-600 dark:text-red-400',
+    'mt-1 h-4 w-4 rounded border-zinc-300 text-amber-600 dark:border-neutral-600 dark:text-cyan-400',
+  error: 'mt-2 text-xs leading-5',
 } as const;
 
 export function CheckboxField({
@@ -33,12 +33,19 @@ export function CheckboxField({
 
   return (
     <div>
-      <label className={cn(style.label, className)}>
+      <label
+        className={cn(
+          style.label,
+          themeClassNames.surface.panel,
+          themeClassNames.text.muted,
+          className,
+        )}
+      >
         <input
           {...props}
           aria-describedby={describedBy}
           aria-invalid={error ? true : props['aria-invalid']}
-          className={style.checkbox}
+          className={cn(style.checkbox, themeClassNames.focus.checkbox)}
           id={id}
           type="checkbox"
         />
@@ -47,7 +54,11 @@ export function CheckboxField({
       </label>
 
       {error ? (
-        <p className={style.error} id={errorId} role="alert">
+        <p
+          className={cn(style.error, themeClassNames.text.danger)}
+          id={errorId}
+          role="alert"
+        >
           {error}
         </p>
       ) : null}

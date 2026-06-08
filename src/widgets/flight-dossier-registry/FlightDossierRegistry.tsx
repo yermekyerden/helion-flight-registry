@@ -7,6 +7,7 @@ import { useFlightApplicationStore } from '@/entities/flight-application/model/f
 import { cn } from '@/shared/lib/class-name/cn';
 import { Panel } from '@/shared/ui/panel/Panel';
 import { SectionHeader } from '@/shared/ui/section-header/SectionHeader';
+import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
 
 import { flightDossierRegistryContent as content } from './flightDossierRegistry.content';
 
@@ -24,30 +25,20 @@ const style = {
   emptyState: 'p-8',
   registry: 'space-y-5',
   list: 'grid gap-4',
-  card: {
-    base: 'overflow-hidden rounded-3xl border bg-white transition dark:bg-slate-900',
-    default: 'border-zinc-300 dark:border-slate-800',
-    latest:
-      'border-amber-400 shadow-lg shadow-amber-500/10 ring-2 ring-amber-400/40 dark:border-amber-500/70 dark:ring-amber-500/30',
-  },
+  card: 'overflow-hidden rounded-3xl border transition',
   cardBody: 'grid gap-5 p-5 md:grid-cols-[128px_1fr]',
-  photo:
-    'h-32 w-32 rounded-2xl border border-zinc-300 object-cover dark:border-slate-700',
+  photo: 'h-32 w-32 rounded-2xl border object-cover',
   content: 'min-w-0 space-y-4',
   header:
-    'flex flex-col gap-3 border-b border-zinc-200 pb-4 sm:flex-row sm:items-start sm:justify-between dark:border-slate-800',
-  pilotName: 'text-xl font-semibold text-zinc-950 dark:text-zinc-100',
-  meta: 'mt-1 text-sm text-zinc-500 dark:text-slate-400',
+    'flex flex-col gap-3 border-b pb-4 sm:flex-row sm:items-start sm:justify-between',
+  pilotName: 'text-xl font-semibold',
+  meta: 'mt-1 text-sm',
   badges: 'flex flex-wrap gap-2',
-  badge:
-    'rounded-full border border-amber-300 px-3 py-1 text-xs font-semibold text-amber-700 dark:border-amber-500/50 dark:text-amber-300',
-  latestBadge:
-    'rounded-full border border-emerald-300 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 dark:border-emerald-500/50 dark:bg-emerald-500/10 dark:text-emerald-300',
+  badge: 'rounded-full border px-3 py-1 text-xs font-semibold',
   grid: 'grid gap-3 sm:grid-cols-2',
-  field: 'rounded-2xl bg-zinc-50 p-3 dark:bg-slate-950',
-  fieldLabel:
-    'text-[11px] font-semibold tracking-[0.18em] text-zinc-500 uppercase dark:text-slate-500',
-  fieldValue: 'mt-1 text-sm font-medium text-zinc-900 dark:text-zinc-100',
+  field: 'rounded-2xl p-3',
+  fieldLabel: 'text-[11px] font-semibold tracking-[0.18em] uppercase',
+  fieldValue: 'mt-1 text-sm font-medium',
 } as const;
 
 export function FlightDossierRegistry() {
@@ -112,16 +103,18 @@ function FlightDossierCard({
       <div className={style.cardBody}>
         <img
           alt={`${flightApplication.name} pilot registry portrait`}
-          className={style.photo}
+          className={cn(style.photo, themeClassNames.border.strong)}
           src={flightApplication.pilotPhotoDataUrl}
         />
 
         <div className={style.content}>
-          <header className={style.header}>
+          <header className={cn(style.header, themeClassNames.border.divider)}>
             <div>
-              <h3 className={style.pilotName}>{flightApplication.name}</h3>
+              <h3 className={cn(style.pilotName, themeClassNames.text.primary)}>
+                {flightApplication.name}
+              </h3>
 
-              <p className={style.meta}>
+              <p className={cn(style.meta, themeClassNames.text.subtle)}>
                 {content.labels.submittedAt}:{' '}
                 {formatSubmittedAt(flightApplication.submittedAt)}
               </p>
@@ -129,16 +122,16 @@ function FlightDossierCard({
 
             <div className={style.badges}>
               {isLatest ? (
-                <span className={style.latestBadge}>
+                <span className={cn(style.badge, themeClassNames.badge.latest)}>
                   {content.latestDossierBadge}
                 </span>
               ) : null}
 
-              <span className={style.badge}>
+              <span className={cn(style.badge, themeClassNames.badge.warning)}>
                 {getProtocolLabel(flightApplication.protocol)}
               </span>
 
-              <span className={style.badge}>
+              <span className={cn(style.badge, themeClassNames.badge.warning)}>
                 {getStatusLabel(flightApplication.status)}
               </span>
             </div>
@@ -193,15 +186,24 @@ function FlightDossierCard({
 
 function DossierField({ label, value }: DossierFieldProps) {
   return (
-    <div className={style.field}>
-      <p className={style.fieldLabel}>{label}</p>
-      <p className={style.fieldValue}>{value}</p>
+    <div className={cn(style.field, themeClassNames.surface.fieldSoft)}>
+      <p className={cn(style.fieldLabel, themeClassNames.text.subtle)}>
+        {label}
+      </p>
+
+      <p className={cn(style.fieldValue, themeClassNames.text.primary)}>
+        {value}
+      </p>
     </div>
   );
 }
 
 function getCardClassName(isLatest: boolean) {
-  return cn(style.card.base, isLatest ? style.card.latest : style.card.default);
+  return cn(
+    style.card,
+    themeClassNames.surface.panel,
+    isLatest && themeClassNames.highlight.latest,
+  );
 }
 
 function getCardAriaLabel(isLatest: boolean) {

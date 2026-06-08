@@ -1,17 +1,16 @@
 import { cn } from '@/shared/lib/class-name/cn';
+import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
 
 import { useColorTheme } from '../model/useColorTheme';
 import { themeToggleContent as content } from './themeToggle.content';
 
 const style = {
   button:
-    'relative inline-flex h-11 w-20 shrink-0 items-center rounded-full border border-zinc-300 bg-zinc-200 p-1 shadow-sm transition-colors duration-300 ease-out focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:focus:ring-offset-slate-900',
+    'relative inline-flex h-11 w-20 shrink-0 items-center rounded-full border bg-zinc-200 p-1 shadow-sm transition-colors duration-300 ease-out dark:bg-neutral-950',
   thumb:
-    'grid h-9 w-9 transform-gpu place-items-center rounded-full border bg-white shadow-sm transition-[transform,color,border-color,background-color] duration-300 ease-out dark:bg-slate-800',
-  thumbLight:
-    'translate-x-0 border-amber-300 text-amber-700 dark:border-amber-500/50 dark:text-amber-300',
-  thumbDark:
-    'translate-x-9 border-sky-300 text-sky-700 dark:border-sky-500/50 dark:text-sky-300',
+    'grid h-9 w-9 transform-gpu place-items-center rounded-full border bg-white shadow-sm transition-[transform,color,border-color,background-color] duration-300 ease-out dark:bg-neutral-900',
+  thumbLight: 'translate-x-0 border-amber-300 text-amber-700',
+  thumbDark: 'translate-x-9 border-cyan-500/40 text-cyan-300',
   icon: 'h-4 w-4',
 } as const;
 
@@ -22,7 +21,11 @@ export function ThemeToggle() {
     <button
       aria-checked={isDarkTheme}
       aria-label={getAriaLabel(isDarkTheme)}
-      className={style.button}
+      className={cn(
+        style.button,
+        themeClassNames.border.strong,
+        themeClassNames.focus.ring,
+      )}
       data-theme-toggle
       onClick={toggleColorTheme}
       role="switch"

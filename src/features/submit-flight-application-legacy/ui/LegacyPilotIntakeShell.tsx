@@ -1,3 +1,6 @@
+import { cn } from '@/shared/lib/class-name/cn';
+import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
+
 import { legacyPilotIntakeShellContent as content } from './LegacyPilotIntakeShell.content';
 import { LegacyPilotIntakeForm } from './LegacyPilotIntakeForm';
 
@@ -7,10 +10,9 @@ type LegacyPilotIntakeShellProps = {
 
 const style = {
   stack: 'space-y-5',
-  notice:
-    'rounded-2xl border border-zinc-300 bg-zinc-50 p-5 dark:border-slate-800 dark:bg-slate-950',
-  title: 'font-semibold text-zinc-950 dark:text-zinc-100',
-  description: 'mt-2 text-sm leading-6 text-zinc-600 dark:text-slate-400',
+  notice: 'rounded-2xl border p-5',
+  title: 'font-semibold',
+  description: 'mt-2 text-sm leading-6',
 } as const;
 
 export function LegacyPilotIntakeShell({
@@ -18,9 +20,14 @@ export function LegacyPilotIntakeShell({
 }: LegacyPilotIntakeShellProps) {
   return (
     <div className={style.stack}>
-      <section className={style.notice}>
-        <h3 className={style.title}>{content.title}</h3>
-        <p className={style.description}>{content.description}</p>
+      <section className={cn(style.notice, themeClassNames.surface.notice)}>
+        <h3 className={cn(style.title, themeClassNames.text.primary)}>
+          {content.title}
+        </h3>
+
+        <p className={cn(style.description, themeClassNames.text.muted)}>
+          {content.description}
+        </p>
       </section>
 
       <LegacyPilotIntakeForm onSubmitted={onSubmitted} />

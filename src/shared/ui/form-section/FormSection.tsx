@@ -1,5 +1,8 @@
 import type { ReactNode } from 'react';
 
+import { cn } from '@/shared/lib/class-name/cn';
+import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
+
 type FormSectionProps = {
   children: ReactNode;
   description?: string;
@@ -7,10 +10,9 @@ type FormSectionProps = {
 };
 
 const style = {
-  section:
-    'rounded-2xl border border-zinc-300 bg-zinc-50 p-5 dark:border-slate-800 dark:bg-slate-950',
-  title: 'font-semibold text-zinc-950 dark:text-zinc-100',
-  description: 'mt-2 text-sm leading-6 text-zinc-600 dark:text-slate-400',
+  section: 'rounded-2xl border p-5',
+  title: 'font-semibold',
+  description: 'mt-2 text-sm leading-6',
   fields: 'mt-5 grid gap-4 md:grid-cols-2',
 } as const;
 
@@ -20,10 +22,14 @@ export function FormSection({
   title,
 }: FormSectionProps) {
   return (
-    <section className={style.section}>
-      <h3 className={style.title}>{title}</h3>
+    <section className={cn(style.section, themeClassNames.surface.panelSoft)}>
+      <h3 className={cn(style.title, themeClassNames.text.primary)}>{title}</h3>
 
-      {description ? <p className={style.description}>{description}</p> : null}
+      {description ? (
+        <p className={cn(style.description, themeClassNames.text.muted)}>
+          {description}
+        </p>
+      ) : null}
 
       <div className={style.fields}>{children}</div>
     </section>

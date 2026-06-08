@@ -1,12 +1,12 @@
 import type { ComponentPropsWithRef } from 'react';
 
 import { cn } from '@/shared/lib/class-name/cn';
+import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
 
 type SelectInputProps = ComponentPropsWithRef<'select'>;
 
 const style = {
-  select:
-    'w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-sm text-zinc-950 outline-none transition focus:border-amber-600 focus:ring-2 focus:ring-amber-500/30 dark:border-slate-700 dark:bg-slate-950 dark:text-zinc-100 dark:focus:border-amber-400',
+  select: 'w-full rounded-xl border px-4 py-3 text-sm transition',
 } as const;
 
 export function SelectInput({
@@ -15,7 +15,15 @@ export function SelectInput({
   ...props
 }: SelectInputProps) {
   return (
-    <select className={cn(style.select, className)} {...props}>
+    <select
+      className={cn(
+        style.select,
+        themeClassNames.surface.field,
+        themeClassNames.focus.field,
+        className,
+      )}
+      {...props}
+    >
       {children}
     </select>
   );

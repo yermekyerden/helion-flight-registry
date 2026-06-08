@@ -5,6 +5,9 @@ import {
   type ComponentPropsWithRef,
 } from 'react';
 
+import { cn } from '@/shared/lib/class-name/cn';
+import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
+
 import {
   selectAddFlightApplication,
   selectOriginCountryOptions,
@@ -35,8 +38,7 @@ type FormSubmitEvent = Parameters<
 
 const style = {
   form: 'space-y-5',
-  actions:
-    'flex flex-col gap-3 border-t border-zinc-200 pt-5 sm:flex-row sm:justify-end dark:border-slate-800',
+  actions: 'flex flex-col gap-3 border-t pt-5 sm:flex-row sm:justify-end',
 } as const;
 
 export function LegacyPilotIntakeForm({
@@ -86,7 +88,7 @@ export function LegacyPilotIntakeForm({
         }}
       />
 
-      <div className={style.actions}>
+      <div className={cn(style.actions, themeClassNames.border.divider)}>
         <Button type="reset" variant="secondary">
           {content.actions.resetButtonLabel}
         </Button>

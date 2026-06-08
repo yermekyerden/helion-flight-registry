@@ -1,5 +1,8 @@
 import type { ReactNode } from 'react';
 
+import { cn } from '@/shared/lib/class-name/cn';
+import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
+
 type FormFieldRenderProps = {
   id: string;
   'aria-describedby'?: string;
@@ -23,9 +26,9 @@ type FieldAccessibilityParams = {
 
 const style = {
   root: 'space-y-2',
-  label: 'block text-sm font-semibold text-zinc-900 dark:text-zinc-100',
-  hint: 'text-xs leading-5 text-zinc-500 dark:text-slate-400',
-  error: 'text-xs leading-5 text-red-600 dark:text-red-400',
+  label: 'block text-sm font-semibold',
+  hint: 'text-xs leading-5',
+  error: 'text-xs leading-5',
 } as const;
 
 export function FormField({
@@ -40,20 +43,27 @@ export function FormField({
 
   return (
     <div className={style.root}>
-      <label className={style.label} htmlFor={id}>
+      <label
+        className={cn(style.label, themeClassNames.text.label)}
+        htmlFor={id}
+      >
         {label}
       </label>
 
       {children(createFieldAccessibilityProps({ error, hint, id }))}
 
       {hint ? (
-        <p className={style.hint} id={hintId}>
+        <p className={cn(style.hint, themeClassNames.text.subtle)} id={hintId}>
           {hint}
         </p>
       ) : null}
 
       {error ? (
-        <p className={style.error} id={errorId} role="alert">
+        <p
+          className={cn(style.error, themeClassNames.text.danger)}
+          id={errorId}
+          role="alert"
+        >
           {error}
         </p>
       ) : null}

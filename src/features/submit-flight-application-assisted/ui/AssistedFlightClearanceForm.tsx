@@ -2,6 +2,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMemo } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 
+import { cn } from '@/shared/lib/class-name/cn';
+import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
+
 import {
   selectAddFlightApplication,
   selectOriginCountryOptions,
@@ -30,8 +33,7 @@ type AssistedFlightClearanceFormProps = {
 
 const style = {
   form: 'space-y-5',
-  actions:
-    'flex flex-col gap-3 border-t border-zinc-200 pt-5 sm:flex-row sm:justify-end dark:border-slate-800',
+  actions: 'flex flex-col gap-3 border-t pt-5 sm:flex-row sm:justify-end',
 } as const;
 
 export function AssistedFlightClearanceForm({
@@ -145,7 +147,7 @@ export function AssistedFlightClearanceForm({
         passwordInputProps={register(fieldNames.password)}
       />
 
-      <div className={style.actions}>
+      <div className={cn(style.actions, themeClassNames.border.divider)}>
         <Button type="reset" variant="secondary">
           {content.actions.resetButtonLabel}
         </Button>

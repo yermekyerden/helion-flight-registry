@@ -1,6 +1,9 @@
 import { useId, useRef, type MouseEvent, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 
+import { cn } from '@/shared/lib/class-name/cn';
+import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
+
 import { modalContent as content } from './modal.content';
 import { useModalFocusManagement } from './useModalFocusManagement';
 
@@ -15,18 +18,14 @@ type ModalProps = {
 
 const style = {
   overlay:
-    'fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 px-4 py-8 backdrop-blur-sm',
+    'fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/75 px-4 py-8 backdrop-blur-sm',
   dialog:
-    'app-scrollbar max-h-[calc(100vh-4rem)] w-full max-w-3xl overflow-y-auto rounded-3xl border border-slate-700 bg-white p-6 shadow-2xl outline-none dark:bg-slate-900',
-  header:
-    'flex items-start justify-between gap-4 border-b border-zinc-200 pb-5 dark:border-slate-800',
-  eyebrow:
-    'text-xs font-semibold tracking-[0.25em] text-amber-700 uppercase dark:text-amber-400',
-  title: 'mt-2 text-2xl font-semibold text-zinc-950 dark:text-zinc-100',
-  description:
-    'mt-2 max-w-2xl text-sm leading-6 text-zinc-600 dark:text-slate-400',
-  closeButton:
-    'rounded-xl border border-zinc-300 px-3 py-2 text-sm font-semibold text-zinc-700 transition hover:border-amber-600 hover:text-amber-700 focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:outline-none dark:border-slate-700 dark:text-slate-300 dark:hover:border-amber-400 dark:hover:text-amber-400 dark:focus:ring-offset-slate-900',
+    'app-scrollbar max-h-[calc(100vh-4rem)] w-full max-w-3xl overflow-y-auto rounded-3xl border p-6 shadow-2xl outline-none',
+  header: 'flex items-start justify-between gap-4 border-b pb-5',
+  eyebrow: 'text-xs font-semibold tracking-[0.25em] uppercase',
+  title: 'mt-2 text-2xl font-semibold',
+  description: 'mt-2 max-w-2xl text-sm leading-6',
+  closeButton: 'rounded-xl px-3 py-2 text-sm font-semibold transition',
   body: 'pt-6',
 } as const;
 
@@ -61,21 +60,31 @@ export function Modal({
         aria-describedby={description ? descriptionId : undefined}
         aria-labelledby={titleId}
         aria-modal="true"
-        className={style.dialog}
+        className={cn(style.dialog, themeClassNames.surface.modal)}
         ref={dialogRef}
         role="dialog"
         tabIndex={-1}
       >
-        <header className={style.header}>
+        <header className={cn(style.header, themeClassNames.border.divider)}>
           <div>
-            {eyebrow ? <p className={style.eyebrow}>{eyebrow}</p> : null}
+            {eyebrow ? (
+              <p className={cn(style.eyebrow, themeClassNames.text.eyebrow)}>
+                {eyebrow}
+              </p>
+            ) : null}
 
-            <h2 className={style.title} id={titleId}>
+            <h2
+              className={cn(style.title, themeClassNames.text.primary)}
+              id={titleId}
+            >
               {title}
             </h2>
 
             {description ? (
-              <p className={style.description} id={descriptionId}>
+              <p
+                className={cn(style.description, themeClassNames.text.muted)}
+                id={descriptionId}
+              >
                 {description}
               </p>
             ) : null}
@@ -83,7 +92,11 @@ export function Modal({
 
           <button
             aria-label={content.closeButtonAriaLabel}
-            className={style.closeButton}
+            className={cn(
+              style.closeButton,
+              themeClassNames.action.secondary,
+              themeClassNames.focus.ring,
+            )}
             onClick={onClose}
             ref={closeButtonRef}
             type="button"

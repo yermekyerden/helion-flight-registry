@@ -23,6 +23,7 @@ export function Button({
     <button
       className={cn(
         style.base,
+        themeClassNames.focus.ring,
         variant === 'primary'
           ? themeClassNames.action.primary
           : themeClassNames.action.secondary,

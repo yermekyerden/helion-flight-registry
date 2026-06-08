@@ -1,4 +1,5 @@
 import { cn } from '@/shared/lib/class-name/cn';
+import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
 
 import { flightApplicationFormContent as content } from '../model/flightApplicationForm.content';
 import {
@@ -18,28 +19,17 @@ type PassphraseRequirementView = {
 };
 
 const style = {
-  panel:
-    'rounded-2xl border border-zinc-300 bg-white p-4 dark:border-slate-700 dark:bg-slate-950',
+  panel: 'rounded-2xl border p-4',
   header: 'flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between',
-  title: 'text-sm font-semibold text-zinc-950 dark:text-zinc-100',
-  description: 'mt-1 text-xs leading-5 text-zinc-500 dark:text-slate-400',
-  score: 'mt-3 text-xs font-semibold text-zinc-600 dark:text-slate-300',
+  title: 'text-sm font-semibold',
+  description: 'mt-1 text-xs leading-5',
+  score: 'mt-3 text-xs font-semibold',
   status:
     'rounded-full border px-3 py-1 text-xs font-semibold whitespace-nowrap',
-  statusIdle:
-    'border-zinc-300 text-zinc-500 dark:border-slate-700 dark:text-slate-400',
-  statusIncomplete:
-    'border-amber-300 text-amber-700 dark:border-amber-500/50 dark:text-amber-300',
-  statusReady:
-    'border-emerald-300 text-emerald-700 dark:border-emerald-500/50 dark:text-emerald-300',
   list: 'mt-4 grid gap-2 sm:grid-cols-2',
-  item: 'flex items-center gap-2 text-xs leading-5 text-zinc-600 dark:text-slate-300',
+  item: 'flex items-center gap-2 text-xs leading-5',
   indicator:
     'flex h-5 w-5 items-center justify-center rounded-full border text-[10px] font-bold',
-  indicatorPending:
-    'border-zinc-300 text-zinc-400 dark:border-slate-700 dark:text-slate-500',
-  indicatorSatisfied:
-    'border-emerald-400 bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300',
 } as const;
 
 export function PassphraseIntegrityPanel({
@@ -54,16 +44,21 @@ export function PassphraseIntegrityPanel({
   const requirements = createPassphraseRequirementViews(integrityState);
 
   return (
-    <aside aria-live="polite" className={style.panel}>
+    <aside
+      aria-live="polite"
+      className={cn(style.panel, themeClassNames.surface.panel)}
+    >
       <div className={style.header}>
         <div>
-          <h4 className={style.title}>{content.passphraseIntegrity.title}</h4>
+          <h4 className={cn(style.title, themeClassNames.text.primary)}>
+            {content.passphraseIntegrity.title}
+          </h4>
 
-          <p className={style.description}>
+          <p className={cn(style.description, themeClassNames.text.subtle)}>
             {content.passphraseIntegrity.description}
           </p>
 
-          <p className={style.score}>
+          <p className={cn(style.score, themeClassNames.text.muted)}>
             {content.passphraseIntegrity.strengthScoreLabel}:{' '}
             {integrityState.satisfiedStrengthRequirementCount}/
             {integrityState.requiredStrengthRequirementCount}
@@ -77,7 +72,10 @@ export function PassphraseIntegrityPanel({
 
       <ul className={style.list}>
         {requirements.map((requirement) => (
-          <li className={style.item} key={requirement.label}>
+          <li
+            className={cn(style.item, themeClassNames.text.muted)}
+            key={requirement.label}
+          >
             <span className={getIndicatorClassName(requirement.isSatisfied)}>
               {getIndicatorLabel(requirement.isSatisfied)}
             </span>
@@ -131,14 +129,14 @@ function getStatusClassName(status: PassphraseIntegrityStatus) {
 
 function getStatusToneClassName(status: PassphraseIntegrityStatus) {
   if (status === 'ready') {
-    return style.statusReady;
+    return themeClassNames.status.success;
   }
 
   if (status === 'incomplete') {
-    return style.statusIncomplete;
+    return themeClassNames.status.warning;
   }
 
-  return style.statusIdle;
+  return themeClassNames.status.idle;
 }
 
 function getStatusLabel(status: PassphraseIntegrityStatus) {
@@ -147,10 +145,10 @@ function getStatusLabel(status: PassphraseIntegrityStatus) {
 
 function getIndicatorClassName(isSatisfied: boolean) {
   if (isSatisfied) {
-    return cn(style.indicator, style.indicatorSatisfied);
+    return cn(style.indicator, themeClassNames.indicator.success);
   }
 
-  return cn(style.indicator, style.indicatorPending);
+  return cn(style.indicator, themeClassNames.indicator.pending);
 }
 
 function getIndicatorLabel(isSatisfied: boolean) {
