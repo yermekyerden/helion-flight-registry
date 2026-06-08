@@ -1,4 +1,5 @@
 import { cn } from '@/shared/lib/class-name/cn';
+import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
 
 type SectionHeaderTitleLevel = 1 | 2 | 3;
 
@@ -23,8 +24,6 @@ const style = {
   },
   eyebrow: {
     base: 'text-xs font-semibold tracking-[0.25em] uppercase',
-    accent: 'text-amber-700 dark:text-amber-400',
-    muted: 'text-zinc-500 dark:text-slate-500',
   },
   title: {
     base: 'mt-3 font-semibold',
@@ -33,7 +32,7 @@ const style = {
     3: 'text-xl',
   },
   description: {
-    base: 'mt-3 text-sm leading-6 text-zinc-600 dark:text-slate-400',
+    base: 'mt-3 text-sm leading-6',
     left: 'max-w-2xl',
     center: 'mx-auto max-w-xl',
   },
@@ -50,12 +49,20 @@ export function SectionHeader({
 }: SectionHeaderProps) {
   return (
     <div className={cn(style.root[align], className)}>
-      <p className={cn(style.eyebrow.base, style.eyebrow[tone])}>{eyebrow}</p>
+      <p className={cn(style.eyebrow.base, getEyebrowToneClassName(tone))}>
+        {eyebrow}
+      </p>
 
       {renderTitle(title, titleLevel)}
 
       {description ? (
-        <p className={cn(style.description.base, style.description[align])}>
+        <p
+          className={cn(
+            style.description.base,
+            style.description[align],
+            themeClassNames.text.muted,
+          )}
+        >
           {description}
         </p>
       ) : null}
@@ -64,7 +71,11 @@ export function SectionHeader({
 }
 
 function renderTitle(title: string, titleLevel: SectionHeaderTitleLevel) {
-  const className = cn(style.title.base, style.title[titleLevel]);
+  const className = cn(
+    style.title.base,
+    style.title[titleLevel],
+    themeClassNames.text.primary,
+  );
 
   if (titleLevel === 1) {
     return <h1 className={className}>{title}</h1>;
@@ -75,4 +86,12 @@ function renderTitle(title: string, titleLevel: SectionHeaderTitleLevel) {
   }
 
   return <h3 className={className}>{title}</h3>;
+}
+
+function getEyebrowToneClassName(tone: SectionHeaderTone) {
+  if (tone === 'muted') {
+    return themeClassNames.text.subtle;
+  }
+
+  return themeClassNames.text.eyebrow;
 }

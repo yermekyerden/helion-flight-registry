@@ -5,6 +5,7 @@ import { AssistedFlightClearanceShell } from '@/features/submit-flight-applicati
 import { LegacyPilotIntakeShell } from '@/features/submit-flight-application-legacy/ui/LegacyPilotIntakeShell';
 import { ThemeToggle } from '@/features/toggle-color-theme/ui/ThemeToggle';
 import { Modal } from '@/shared/ui/modal/Modal';
+import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
 import { FlightApplicationLauncher } from '@/widgets/flight-application-launcher/FlightApplicationLauncher';
 import { FlightDossierRegistry } from '@/widgets/flight-dossier-registry/FlightDossierRegistry';
 import { RegistryStatusSummary } from '@/widgets/registry-status-summary/RegistryStatusSummary';
@@ -12,16 +13,14 @@ import { RegistryStatusSummary } from '@/widgets/registry-status-summary/Registr
 import { stellarFlightRegistryPageContent as content } from './stellarFlightRegistryPage.content';
 
 const style = {
-  page: 'min-h-screen bg-zinc-100 px-6 py-10 text-zinc-950 transition-colors dark:bg-slate-950 dark:text-zinc-100',
+  page: 'min-h-screen px-6 py-10',
   container: 'mx-auto flex max-w-5xl flex-col gap-8',
-  hero: 'rounded-3xl border border-zinc-300 bg-white p-8 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900',
+  hero: 'rounded-3xl border p-8 shadow-sm',
   heroTop: 'flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between',
   heroContent: 'min-w-0',
-  heroEyebrow:
-    'text-sm font-semibold tracking-[0.3em] text-amber-700 uppercase dark:text-amber-400',
+  heroEyebrow: 'text-sm font-semibold tracking-[0.3em] uppercase',
   heroTitle: 'mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl',
-  heroDescription:
-    'mt-4 max-w-2xl text-base leading-7 text-zinc-600 dark:text-slate-400',
+  heroDescription: 'mt-4 max-w-2xl text-base leading-7',
 } as const;
 
 export function StellarFlightRegistryPage() {
@@ -33,16 +32,28 @@ export function StellarFlightRegistryPage() {
   const isAssistedModalOpen = activeProtocol === 'assisted';
 
   return (
-    <main className={style.page}>
+    <main className={`${style.page} ${themeClassNames.page}`}>
       <section className={style.container}>
-        <header className={style.hero}>
+        <header className={`${style.hero} ${themeClassNames.surface.panel}`}>
           <div className={style.heroTop}>
             <div className={style.heroContent}>
-              <p className={style.heroEyebrow}>{hero.eyebrow}</p>
+              <p
+                className={`${style.heroEyebrow} ${themeClassNames.text.eyebrow}`}
+              >
+                {hero.eyebrow}
+              </p>
 
-              <h1 className={style.heroTitle}>{hero.title}</h1>
+              <h1
+                className={`${style.heroTitle} ${themeClassNames.text.primary}`}
+              >
+                {hero.title}
+              </h1>
 
-              <p className={style.heroDescription}>{hero.description}</p>
+              <p
+                className={`${style.heroDescription} ${themeClassNames.text.muted}`}
+              >
+                {hero.description}
+              </p>
             </div>
 
             <ThemeToggle />

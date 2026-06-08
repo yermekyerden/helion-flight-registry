@@ -1,6 +1,7 @@
 import type { ComponentPropsWithoutRef } from 'react';
 
 import { cn } from '@/shared/lib/class-name/cn';
+import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
 
 type PanelVariant = 'solid' | 'dashed';
 
@@ -9,13 +10,20 @@ type PanelProps = ComponentPropsWithoutRef<'section'> & {
 };
 
 const style = {
-  base: 'rounded-3xl border bg-white p-6 dark:bg-slate-900',
-  solid: 'border-zinc-300 dark:border-slate-800',
-  dashed: 'border-dashed border-zinc-300 dark:border-slate-800',
+  base: 'rounded-3xl border p-6',
+  dashed: 'border-dashed',
 } as const;
 
 export function Panel({ className, variant = 'solid', ...props }: PanelProps) {
   return (
-    <section className={cn(style.base, style[variant], className)} {...props} />
+    <section
+      className={cn(
+        style.base,
+        themeClassNames.surface.panel,
+        variant === 'dashed' && style.dashed,
+        className,
+      )}
+      {...props}
+    />
   );
 }
