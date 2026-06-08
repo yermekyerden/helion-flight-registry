@@ -8,6 +8,9 @@ export const flightDossierRegistryContent = {
   registeredDescription:
     'Pending clearance packets submitted through the active registry node.',
 
+  latestDossierBadge: 'Latest packet',
+  latestDossierAriaLabel: 'Latest submitted flight dossier',
+
   labels: {
     protocol: 'Protocol',
     status: 'Status',

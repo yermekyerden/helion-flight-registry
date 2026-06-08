@@ -1,6 +1,10 @@
 import type { FlightApplication } from '@/entities/flight-application/model/flightApplication.types';
-import { selectFlightApplications } from '@/entities/flight-application/model/flightApplicationStore.selectors';
+import {
+  selectFlightApplications,
+  selectLatestFlightApplicationId,
+} from '@/entities/flight-application/model/flightApplicationStore.selectors';
 import { useFlightApplicationStore } from '@/entities/flight-application/model/flightApplicationStore';
+import { cn } from '@/shared/lib/class-name/cn';
 import { Panel } from '@/shared/ui/panel/Panel';
 import { SectionHeader } from '@/shared/ui/section-header/SectionHeader';
 
@@ -8,6 +12,7 @@ import { flightDossierRegistryContent as content } from './flightDossierRegistry
 
 type FlightDossierCardProps = {
   flightApplication: FlightApplication;
+  isLatest: boolean;
 };
 
 type DossierFieldProps = {
@@ -19,7 +24,12 @@ const style = {
   emptyState: 'p-8',
   registry: 'space-y-5',
   list: 'grid gap-4',
-  card: 'overflow-hidden rounded-3xl border border-zinc-300 bg-white dark:border-slate-800 dark:bg-slate-900',
+  card: {
+    base: 'overflow-hidden rounded-3xl border bg-white transition dark:bg-slate-900',
+    default: 'border-zinc-300 dark:border-slate-800',
+    latest:
+      'border-amber-400 shadow-lg shadow-amber-500/10 ring-2 ring-amber-400/40 dark:border-amber-500/70 dark:ring-amber-500/30',
+  },
   cardBody: 'grid gap-5 p-5 md:grid-cols-[128px_1fr]',
   photo:
     'h-32 w-32 rounded-2xl border border-zinc-300 object-cover dark:border-slate-700',
@@ -31,6 +41,8 @@ const style = {
   badges: 'flex flex-wrap gap-2',
   badge:
     'rounded-full border border-amber-300 px-3 py-1 text-xs font-semibold text-amber-700 dark:border-amber-500/50 dark:text-amber-300',
+  latestBadge:
+    'rounded-full border border-emerald-300 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 dark:border-emerald-500/50 dark:bg-emerald-500/10 dark:text-emerald-300',
   grid: 'grid gap-3 sm:grid-cols-2',
   field: 'rounded-2xl bg-zinc-50 p-3 dark:bg-slate-950',
   fieldLabel:
@@ -41,6 +53,10 @@ const style = {
 export function FlightDossierRegistry() {
   const flightApplications = useFlightApplicationStore(
     selectFlightApplications,
+  );
+
+  const latestFlightApplicationId = useFlightApplicationStore(
+    selectLatestFlightApplicationId,
   );
 
   if (flightApplications.length === 0) {
@@ -60,6 +76,7 @@ export function FlightDossierRegistry() {
           {flightApplications.map((flightApplication) => (
             <FlightDossierCard
               flightApplication={flightApplication}
+              isLatest={flightApplication.id === latestFlightApplicationId}
               key={flightApplication.id}
             />
           ))}
@@ -83,9 +100,15 @@ function EmptyFlightDossierRegistry() {
   );
 }
 
-function FlightDossierCard({ flightApplication }: FlightDossierCardProps) {
+function FlightDossierCard({
+  flightApplication,
+  isLatest,
+}: FlightDossierCardProps) {
   return (
-    <article className={style.card}>
+    <article
+      aria-label={getCardAriaLabel(isLatest)}
+      className={getCardClassName(isLatest)}
+    >
       <div className={style.cardBody}>
         <img
           alt={`${flightApplication.name} pilot registry portrait`}
@@ -105,6 +128,12 @@ function FlightDossierCard({ flightApplication }: FlightDossierCardProps) {
             </div>
 
             <div className={style.badges}>
+              {isLatest ? (
+                <span className={style.latestBadge}>
+                  {content.latestDossierBadge}
+                </span>
+              ) : null}
+
               <span className={style.badge}>
                 {getProtocolLabel(flightApplication.protocol)}
               </span>
@@ -169,6 +198,18 @@ function DossierField({ label, value }: DossierFieldProps) {
       <p className={style.fieldValue}>{value}</p>
     </div>
   );
+}
+
+function getCardClassName(isLatest: boolean) {
+  return cn(style.card.base, isLatest ? style.card.latest : style.card.default);
+}
+
+function getCardAriaLabel(isLatest: boolean) {
+  if (isLatest) {
+    return content.latestDossierAriaLabel;
+  }
+
+  return undefined;
 }
 
 function getProtocolLabel(protocol: FlightApplication['protocol']) {
