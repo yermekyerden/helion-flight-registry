@@ -1,4 +1,9 @@
-import { useState, type ChangeEvent, type ComponentPropsWithRef } from 'react';
+import {
+  useMemo,
+  useState,
+  type ChangeEvent,
+  type ComponentPropsWithRef,
+} from 'react';
 
 import {
   selectAddFlightApplication,
@@ -15,7 +20,7 @@ import { PilotIdentityFormSection } from '@/features/complete-flight-application
 import { SecurityClearanceFormSection } from '@/features/complete-flight-application-form/ui/sections/SecurityClearanceFormSection';
 import { VesselProfileFormSection } from '@/features/complete-flight-application-form/ui/sections/VesselProfileFormSection';
 import { readFileAsDataUrl } from '@/shared/lib/file/readFileAsDataUrl';
-import { flightApplicationFormSchema } from '@/shared/lib/validation/flight-application';
+import { createFlightApplicationFormSchema } from '@/shared/lib/validation/flight-application';
 import { Button } from '@/shared/ui/button/Button';
 
 import { readLegacyPilotIntakeFormData } from '../model/readLegacyPilotIntakeFormData';
@@ -42,6 +47,11 @@ export function LegacyPilotIntakeForm({
   );
 
   const countryOptions = useFlightApplicationStore(selectOriginCountryOptions);
+
+  const flightApplicationFormSchema = useMemo(
+    () => createFlightApplicationFormSchema(countryOptions),
+    [countryOptions],
+  );
 
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState<FlightApplicationFormFieldErrors>({});

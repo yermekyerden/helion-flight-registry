@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMemo } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 
 import {
@@ -17,7 +18,7 @@ import { SecurityClearanceFormSection } from '@/features/complete-flight-applica
 import { VesselProfileFormSection } from '@/features/complete-flight-application-form/ui/sections/VesselProfileFormSection';
 import { readFileAsDataUrl } from '@/shared/lib/file/readFileAsDataUrl';
 import {
-  flightApplicationFormSchema,
+  createFlightApplicationFormSchema,
   type FlightApplicationFormInputValues,
   type FlightApplicationFormValues,
 } from '@/shared/lib/validation/flight-application';
@@ -41,6 +42,11 @@ export function AssistedFlightClearanceForm({
   );
 
   const countryOptions = useFlightApplicationStore(selectOriginCountryOptions);
+
+  const flightApplicationFormSchema = useMemo(
+    () => createFlightApplicationFormSchema(countryOptions),
+    [countryOptions],
+  );
 
   const {
     control,

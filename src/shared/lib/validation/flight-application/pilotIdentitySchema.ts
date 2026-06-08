@@ -5,13 +5,17 @@ import { formLimits } from '@/shared/config/formLimits';
 import { flightApplicationValidationMessages as messages } from './flightApplicationValidationMessages';
 import { imageFileSchema } from './imageFileSchema';
 import { validateEmailWithoutRegex } from './validateEmailWithoutRegex';
+import { validateNameStartsWithUppercaseLetter } from './validateNameStartsWithUppercaseLetter';
 
 export const pilotIdentitySchema = z.object({
   name: z
     .string()
     .trim()
     .min(formLimits.name.minLength, messages.pilotIdentity.nameTooShort)
-    .max(formLimits.name.maxLength, messages.pilotIdentity.nameTooLong),
+    .max(formLimits.name.maxLength, messages.pilotIdentity.nameTooLong)
+    .refine(validateNameStartsWithUppercaseLetter, {
+      message: messages.pilotIdentity.nameMustStartWithUppercaseLetter,
+    }),
 
   age: z.coerce
     .number()
