@@ -1,3 +1,5 @@
+import { useState, type ChangeEvent } from 'react';
+
 import {
   flightPurposes,
   identityMarkers,
@@ -7,13 +9,18 @@ import {
 } from '@/shared/config/flightApplicationOptions';
 import { formLimits } from '@/shared/config/formLimits';
 import { CheckboxField } from '@/shared/ui/checkbox-field/CheckboxField';
+import { FileInput } from '@/shared/ui/file-input/FileInput';
 import { FormField } from '@/shared/ui/form-field/FormField';
 import { FormSection } from '@/shared/ui/form-section/FormSection';
 import { NumberInput } from '@/shared/ui/number-input/NumberInput';
+import { PasswordInput } from '@/shared/ui/password-input/PasswordInput';
 import { SelectInput } from '@/shared/ui/select-input/SelectInput';
 import { TextInput } from '@/shared/ui/text-input/TextInput';
 
 import { flightApplicationFormContent as content } from '../model/flightApplicationForm.content';
+import { PassphraseIntegrityPanel } from './PassphraseIntegrityPanel';
+
+const acceptedImageMimeTypes = formLimits.image.acceptedMimeTypes.join(',');
 
 const style = {
   stack: 'space-y-5',
@@ -68,6 +75,15 @@ function PilotIdentitySection() {
           <SelectOptions options={identityMarkers} />
         </SelectInput>
       </FormField>
+
+      <div className={style.fullWidth}>
+        <FormField
+          hint={content.fields.pilotPhoto.hint}
+          label={content.fields.pilotPhoto.label}
+        >
+          <FileInput accept={acceptedImageMimeTypes} />
+        </FormField>
+      </div>
     </FormSection>
   );
 }
@@ -172,30 +188,50 @@ function FlightRequestSection() {
 }
 
 function SecurityClearanceSection() {
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
   return (
     <FormSection
       description={content.sections.securityClearance.description}
       title={content.sections.securityClearance.title}
     >
       <FormField label={content.fields.password.label}>
-        <TextInput
+        <PasswordInput
+          onChange={handlePasswordChange}
           placeholder={content.fields.password.placeholder}
-          type="password"
+          value={password}
         />
       </FormField>
 
       <FormField label={content.fields.confirmPassword.label}>
-        <TextInput
+        <PasswordInput
+          onChange={handleConfirmPasswordChange}
           placeholder={content.fields.confirmPassword.placeholder}
-          type="password"
+          value={confirmPassword}
         />
       </FormField>
+
+      <div className={style.fullWidth}>
+        <PassphraseIntegrityPanel
+          confirmPassword={confirmPassword}
+          password={password}
+        />
+      </div>
 
       <div className={style.fullWidth}>
         <CheckboxField>{content.fields.acceptedTerms.label}</CheckboxField>
       </div>
     </FormSection>
   );
+
+  function handlePasswordChange(event: ChangeEvent<HTMLInputElement>) {
+    setPassword(event.target.value);
+  }
+
+  function handleConfirmPasswordChange(event: ChangeEvent<HTMLInputElement>) {
+    setConfirmPassword(event.target.value);
+  }
 }
 
 type SelectOptionsProps = {

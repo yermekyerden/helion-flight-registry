@@ -1,3 +1,5 @@
+import { formLimits } from '@/shared/config/formLimits';
+
 export const flightApplicationFormContent = {
   selectPlaceholder: 'Select registry value',
 
@@ -46,6 +48,10 @@ export const flightApplicationFormContent = {
     gender: {
       label: 'Identity marker',
     },
+    pilotPhoto: {
+      label: 'Pilot photo',
+      hint: `PNG or JPEG image. Maximum file size: ${formLimits.image.maxSizeInMegabytes} MB.`,
+    },
     originSector: {
       label: 'Origin sector',
     },
@@ -90,6 +96,25 @@ export const flightApplicationFormContent = {
     },
     acceptedTerms: {
       label: 'I accept the Stellar Flight Protocol and registry data policy.',
+    },
+  },
+
+  passphraseIntegrity: {
+    title: 'Passphrase integrity',
+    description:
+      'Registry checks update while the access passphrase is entered.',
+    status: {
+      idle: 'Awaiting passphrase',
+      incomplete: 'Incomplete',
+      ready: 'Ready for clearance',
+    },
+    requirements: {
+      minimumLength: `At least ${formLimits.password.minLength} characters`,
+      confirmationMatch: 'Confirmation matches access passphrase',
+    },
+    requirementStatus: {
+      satisfied: 'Satisfied',
+      pending: 'Pending',
     },
   },
 } as const;
