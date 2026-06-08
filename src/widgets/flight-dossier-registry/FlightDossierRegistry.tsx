@@ -90,7 +90,7 @@ function FlightDossierCard({ flightApplication }: FlightDossierCardProps) {
         <img
           alt={`${flightApplication.name} pilot registry portrait`}
           className={style.photo}
-          src={flightApplication.pilotPhotoPreviewUrl}
+          src={flightApplication.pilotPhotoDataUrl}
         />
 
         <div className={style.content}>

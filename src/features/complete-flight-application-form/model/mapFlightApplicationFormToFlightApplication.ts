@@ -8,7 +8,7 @@ import type { FlightApplicationFormValues } from '@/shared/lib/validation/flight
 type MapFlightApplicationFormToFlightApplicationParams = {
   formValues: FlightApplicationFormValues;
   id: string;
-  pilotPhotoPreviewUrl: string;
+  pilotPhotoDataUrl: string;
   protocol: FlightApplicationProtocol;
   submittedAt: string;
 };
@@ -16,7 +16,7 @@ type MapFlightApplicationFormToFlightApplicationParams = {
 export function mapFlightApplicationFormToFlightApplication({
   formValues,
   id,
-  pilotPhotoPreviewUrl,
+  pilotPhotoDataUrl,
   protocol,
   submittedAt,
 }: MapFlightApplicationFormToFlightApplicationParams): FlightApplication {
@@ -30,7 +30,7 @@ export function mapFlightApplicationFormToFlightApplication({
     age: formValues.age,
     email: formValues.email,
     identityMarker: formValues.gender,
-    pilotPhotoPreviewUrl,
+    pilotPhotoDataUrl,
 
     originSector: formValues.originSector,
     originWorld: formValues.originWorld,

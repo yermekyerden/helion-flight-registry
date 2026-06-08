@@ -6,9 +6,12 @@ import { flightApplicationValidationMessages as messages } from './flightApplica
 const bytesPerMegabyte = 1024 * 1024;
 
 export const imageFileSchema = z
-  .custom<File>((value) => isFile(value), {
-    message: messages.pilotIdentity.missingPilotPhoto,
-  })
+  .preprocess(
+    normalizeImageFileInput,
+    z.custom<File>((value) => isFile(value), {
+      message: messages.pilotIdentity.missingPilotPhoto,
+    }),
+  )
   .refine((file) => isAcceptedImageType(file.type), {
     message: messages.pilotIdentity.invalidPilotPhotoType,
   })
@@ -16,8 +19,38 @@ export const imageFileSchema = z
     message: messages.pilotIdentity.oversizedPilotPhoto,
   });
 
+function normalizeImageFileInput(value: unknown) {
+  if (isFile(value)) {
+    return value;
+  }
+
+  if (isFileList(value)) {
+    return getFirstFileFromFileList(value);
+  }
+
+  return value;
+}
+
+function getFirstFileFromFileList(fileList: FileList) {
+  const file = fileList.item(0);
+
+  if (!file || isEmptyFile(file)) {
+    return undefined;
+  }
+
+  return file;
+}
+
 function isFile(value: unknown): value is File {
   return typeof File !== 'undefined' && value instanceof File;
+}
+
+function isFileList(value: unknown): value is FileList {
+  return typeof FileList !== 'undefined' && value instanceof FileList;
+}
+
+function isEmptyFile(file: File) {
+  return file.name.length === 0 && file.size === 0;
 }
 
 function isAcceptedImageType(mimeType: string) {

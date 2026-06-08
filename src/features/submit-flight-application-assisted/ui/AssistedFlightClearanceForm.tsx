@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { ChangeEvent } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 
 import { selectAddFlightApplication } from '@/entities/flight-application/model/flightApplicationStore.selectors';
@@ -13,6 +12,7 @@ import { OriginRegistryFormSection } from '@/features/complete-flight-applicatio
 import { PilotIdentityFormSection } from '@/features/complete-flight-application-form/ui/sections/PilotIdentityFormSection';
 import { SecurityClearanceFormSection } from '@/features/complete-flight-application-form/ui/sections/SecurityClearanceFormSection';
 import { VesselProfileFormSection } from '@/features/complete-flight-application-form/ui/sections/VesselProfileFormSection';
+import { readFileAsDataUrl } from '@/shared/lib/file/readFileAsDataUrl';
 import {
   flightApplicationFormSchema,
   type FlightApplicationFormInputValues,
@@ -43,8 +43,6 @@ export function AssistedFlightClearanceForm({
     handleSubmit,
     register,
     reset,
-    resetField,
-    setValue,
   } = useForm<
     FlightApplicationFormInputValues,
     unknown,
@@ -69,34 +67,17 @@ export function AssistedFlightClearanceForm({
   const fieldErrors =
     mapReactHookFormErrorsToFlightApplicationFormFieldErrors(errors);
 
-  const pilotPhotoInputProps = register(fieldNames.pilotPhoto);
-
-  function handlePilotPhotoChange(event: ChangeEvent<HTMLInputElement>) {
-    const selectedFile = event.currentTarget.files?.[0];
-
-    if (!selectedFile) {
-      resetField(fieldNames.pilotPhoto);
-      return;
-    }
-
-    setValue(fieldNames.pilotPhoto, selectedFile, {
-      shouldDirty: true,
-      shouldTouch: true,
-      shouldValidate: true,
-    });
-  }
-
   function handleFormReset() {
     reset();
   }
 
-  function handleValidSubmit(formValues: FlightApplicationFormValues) {
-    const pilotPhotoPreviewUrl = URL.createObjectURL(formValues.pilotPhoto);
+  async function handleValidSubmit(formValues: FlightApplicationFormValues) {
+    const pilotPhotoDataUrl = await readFileAsDataUrl(formValues.pilotPhoto);
 
     const flightApplication = mapFlightApplicationFormToFlightApplication({
       formValues,
       id: crypto.randomUUID(),
-      pilotPhotoPreviewUrl,
+      pilotPhotoDataUrl,
       protocol: 'assisted',
       submittedAt: new Date().toISOString(),
     });
@@ -119,10 +100,7 @@ export function AssistedFlightClearanceForm({
         errors={fieldErrors}
         genderSelectProps={register(fieldNames.gender)}
         nameInputProps={register(fieldNames.name)}
-        pilotPhotoInputProps={{
-          ...pilotPhotoInputProps,
-          onChange: handlePilotPhotoChange,
-        }}
+        pilotPhotoInputProps={register(fieldNames.pilotPhoto)}
       />
 
       <OriginRegistryFormSection

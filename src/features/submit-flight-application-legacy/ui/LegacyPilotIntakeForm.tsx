@@ -11,6 +11,7 @@ import { OriginRegistryFormSection } from '@/features/complete-flight-applicatio
 import { PilotIdentityFormSection } from '@/features/complete-flight-application-form/ui/sections/PilotIdentityFormSection';
 import { SecurityClearanceFormSection } from '@/features/complete-flight-application-form/ui/sections/SecurityClearanceFormSection';
 import { VesselProfileFormSection } from '@/features/complete-flight-application-form/ui/sections/VesselProfileFormSection';
+import { readFileAsDataUrl } from '@/shared/lib/file/readFileAsDataUrl';
 import { flightApplicationFormSchema } from '@/shared/lib/validation/flight-application';
 import { Button } from '@/shared/ui/button/Button';
 
@@ -89,7 +90,7 @@ export function LegacyPilotIntakeForm({
     clearFormState();
   }
 
-  function handleFormSubmit(event: FormSubmitEvent) {
+  async function handleFormSubmit(event: FormSubmitEvent) {
     event.preventDefault();
 
     const formElement = event.currentTarget;
@@ -104,14 +105,14 @@ export function LegacyPilotIntakeForm({
       return;
     }
 
-    const pilotPhotoPreviewUrl = URL.createObjectURL(
+    const pilotPhotoDataUrl = await readFileAsDataUrl(
       validationResult.data.pilotPhoto,
     );
 
     const flightApplication = mapFlightApplicationFormToFlightApplication({
       formValues: validationResult.data,
       id: crypto.randomUUID(),
-      pilotPhotoPreviewUrl,
+      pilotPhotoDataUrl,
       protocol: 'legacy',
       submittedAt: new Date().toISOString(),
     });

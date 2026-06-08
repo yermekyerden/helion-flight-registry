@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 import { originAuthorities } from '@/shared/config/flightApplicationOptions';
 import type {
@@ -15,23 +16,32 @@ export type FlightApplicationStoreState = {
 };
 
 export const useFlightApplicationStore = create<FlightApplicationStoreState>()(
-  (set) => ({
-    flightApplications: [],
-    latestFlightApplicationId: null,
-    originCountryOptions: originAuthorities,
+  persist(
+    (set) => ({
+      flightApplications: [],
+      latestFlightApplicationId: null,
+      originCountryOptions: originAuthorities,
 
-    addFlightApplication: (flightApplication) => {
-      set((state) => ({
-        flightApplications: [flightApplication, ...state.flightApplications],
-        latestFlightApplicationId: flightApplication.id,
-      }));
-    },
+      addFlightApplication: (flightApplication) => {
+        set((state) => ({
+          flightApplications: [flightApplication, ...state.flightApplications],
+          latestFlightApplicationId: flightApplication.id,
+        }));
+      },
 
-    clearFlightApplications: () => {
-      set({
-        flightApplications: [],
-        latestFlightApplicationId: null,
-      });
+      clearFlightApplications: () => {
+        set({
+          flightApplications: [],
+          latestFlightApplicationId: null,
+        });
+      },
+    }),
+    {
+      name: 'helion-flight-registry',
+      partialize: (state) => ({
+        flightApplications: state.flightApplications,
+        latestFlightApplicationId: state.latestFlightApplicationId,
+      }),
     },
-  }),
+  ),
 );

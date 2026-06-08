@@ -27,7 +27,7 @@ export type PilotIdentity = {
   age: number;
   email: string;
   identityMarker: IdentityMarker;
-  pilotPhotoPreviewUrl: string;
+  pilotPhotoDataUrl: string;
 };
 
 export type OriginRegistry = {
