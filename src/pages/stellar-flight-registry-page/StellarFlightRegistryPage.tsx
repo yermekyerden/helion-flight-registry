@@ -3,6 +3,7 @@ import { useState } from 'react';
 import type { FlightApplicationProtocol } from '@/entities/flight-application/model/flightApplication.types';
 import { AssistedFlightClearanceShell } from '@/features/submit-flight-application-assisted/ui/AssistedFlightClearanceShell';
 import { LegacyPilotIntakeShell } from '@/features/submit-flight-application-legacy/ui/LegacyPilotIntakeShell';
+import { ThemeToggle } from '@/features/toggle-color-theme/ui/ThemeToggle';
 import { Modal } from '@/shared/ui/modal/Modal';
 import { FlightApplicationLauncher } from '@/widgets/flight-application-launcher/FlightApplicationLauncher';
 import { FlightDossierRegistry } from '@/widgets/flight-dossier-registry/FlightDossierRegistry';
@@ -11,9 +12,11 @@ import { RegistryStatusSummary } from '@/widgets/registry-status-summary/Registr
 import { stellarFlightRegistryPageContent as content } from './stellarFlightRegistryPage.content';
 
 const style = {
-  page: 'min-h-screen bg-zinc-100 px-6 py-10 text-zinc-950 dark:bg-slate-950 dark:text-zinc-100',
+  page: 'min-h-screen bg-zinc-100 px-6 py-10 text-zinc-950 transition-colors dark:bg-slate-950 dark:text-zinc-100',
   container: 'mx-auto flex max-w-5xl flex-col gap-8',
-  hero: 'rounded-3xl border border-zinc-300 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900',
+  hero: 'rounded-3xl border border-zinc-300 bg-white p-8 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900',
+  heroTop: 'flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between',
+  heroContent: 'min-w-0',
   heroEyebrow:
     'text-sm font-semibold tracking-[0.3em] text-amber-700 uppercase dark:text-amber-400',
   heroTitle: 'mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl',
@@ -33,11 +36,17 @@ export function StellarFlightRegistryPage() {
     <main className={style.page}>
       <section className={style.container}>
         <header className={style.hero}>
-          <p className={style.heroEyebrow}>{hero.eyebrow}</p>
+          <div className={style.heroTop}>
+            <div className={style.heroContent}>
+              <p className={style.heroEyebrow}>{hero.eyebrow}</p>
 
-          <h1 className={style.heroTitle}>{hero.title}</h1>
+              <h1 className={style.heroTitle}>{hero.title}</h1>
 
-          <p className={style.heroDescription}>{hero.description}</p>
+              <p className={style.heroDescription}>{hero.description}</p>
+            </div>
+
+            <ThemeToggle />
+          </div>
         </header>
 
         <RegistryStatusSummary />
