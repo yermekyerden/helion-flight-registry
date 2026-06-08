@@ -13,7 +13,10 @@ export function useColorTheme() {
     useState<ColorTheme>(getInitialColorTheme);
 
   useEffect(() => {
-    applyColorTheme(colorTheme);
+    applyColorTheme(colorTheme, {
+      suppressAppTransitions: true,
+    });
+
     saveColorTheme(colorTheme);
   }, [colorTheme]);
 

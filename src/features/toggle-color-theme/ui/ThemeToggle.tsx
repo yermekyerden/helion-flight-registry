@@ -5,14 +5,14 @@ import { themeToggleContent as content } from './themeToggle.content';
 
 const style = {
   button:
-    'inline-flex shrink-0 items-center gap-3 rounded-2xl border border-zinc-300 bg-zinc-50 px-4 py-3 text-sm font-semibold text-zinc-700 shadow-sm transition hover:border-amber-600 hover:text-amber-700 focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:text-slate-300 dark:hover:border-amber-400 dark:hover:text-amber-400 dark:focus:ring-offset-slate-900',
-  indicator:
-    'flex h-8 w-8 items-center justify-center rounded-xl border text-base transition',
-  indicatorLight:
-    'border-amber-300 bg-amber-50 text-amber-700 dark:border-amber-500/50 dark:bg-amber-500/10 dark:text-amber-300',
-  indicatorDark:
-    'border-sky-300 bg-sky-50 text-sky-700 dark:border-sky-500/50 dark:bg-sky-500/10 dark:text-sky-300',
-  label: 'whitespace-nowrap',
+    'relative inline-flex h-11 w-20 shrink-0 items-center rounded-full border border-zinc-300 bg-zinc-200 p-1 shadow-sm transition-colors duration-300 ease-out focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:focus:ring-offset-slate-900',
+  thumb:
+    'grid h-9 w-9 transform-gpu place-items-center rounded-full border bg-white shadow-sm transition-[transform,color,border-color,background-color] duration-300 ease-out dark:bg-slate-800',
+  thumbLight:
+    'translate-x-0 border-amber-300 text-amber-700 dark:border-amber-500/50 dark:text-amber-300',
+  thumbDark:
+    'translate-x-9 border-sky-300 text-sky-700 dark:border-sky-500/50 dark:text-sky-300',
+  icon: 'h-4 w-4',
 } as const;
 
 export function ThemeToggle() {
@@ -20,42 +20,64 @@ export function ThemeToggle() {
 
   return (
     <button
+      aria-checked={isDarkTheme}
       aria-label={getAriaLabel(isDarkTheme)}
-      aria-pressed={isDarkTheme}
       className={style.button}
+      data-theme-toggle
       onClick={toggleColorTheme}
+      role="switch"
       type="button"
     >
-      <span aria-hidden="true" className={getIndicatorClassName(isDarkTheme)}>
-        {getIndicatorLabel(isDarkTheme)}
+      <span aria-hidden="true" className={getThumbClassName(isDarkTheme)}>
+        {isDarkTheme ? <MoonIcon /> : <SunIcon />}
       </span>
 
-      <span className={style.label}>{getButtonLabel(isDarkTheme)}</span>
+      <span className="sr-only">{getStateLabel(isDarkTheme)}</span>
     </button>
   );
 }
 
-function getIndicatorClassName(isDarkTheme: boolean) {
-  return cn(
-    style.indicator,
-    isDarkTheme ? style.indicatorDark : style.indicatorLight,
+function SunIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      className={style.icon}
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M12 4V2M12 22v-2M4 12H2M22 12h-2M5.64 5.64 4.22 4.22M19.78 19.78l-1.42-1.42M18.36 5.64l1.42-1.42M4.22 19.78l1.42-1.42"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeWidth="2"
+      />
+
+      <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2" />
+    </svg>
   );
 }
 
-function getIndicatorLabel(isDarkTheme: boolean) {
-  if (isDarkTheme) {
-    return '☾';
-  }
-
-  return '☀';
+function MoonIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      className={style.icon}
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M20 15.31A8 8 0 0 1 8.69 4 7 7 0 1 0 20 15.31Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+    </svg>
+  );
 }
 
-function getButtonLabel(isDarkTheme: boolean) {
-  if (isDarkTheme) {
-    return content.darkModeLabel;
-  }
-
-  return content.lightModeLabel;
+function getThumbClassName(isDarkTheme: boolean) {
+  return cn(style.thumb, isDarkTheme ? style.thumbDark : style.thumbLight);
 }
 
 function getAriaLabel(isDarkTheme: boolean) {
@@ -64,4 +86,12 @@ function getAriaLabel(isDarkTheme: boolean) {
   }
 
   return content.switchToDarkModeAriaLabel;
+}
+
+function getStateLabel(isDarkTheme: boolean) {
+  if (isDarkTheme) {
+    return content.darkModeStateLabel;
+  }
+
+  return content.lightModeStateLabel;
 }

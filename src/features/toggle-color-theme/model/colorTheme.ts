@@ -1,11 +1,19 @@
 export type ColorTheme = 'dark' | 'light';
 
+type ApplyColorThemeOptions = {
+  suppressAppTransitions?: boolean;
+};
+
 const colorThemeStorageKey = 'helion-color-theme';
 const darkThemeClassName = 'dark';
+const themeChangeInstantClassName = 'theme-change-instant';
 const darkColorSchemeQuery = '(prefers-color-scheme: dark)';
+const transitionSuppressionDurationInMilliseconds = 80;
 
 export function initializeColorTheme() {
-  applyColorTheme(getInitialColorTheme());
+  applyColorTheme(getInitialColorTheme(), {
+    suppressAppTransitions: false,
+  });
 }
 
 export function getInitialColorTheme(): ColorTheme {
@@ -30,17 +38,21 @@ export function getNextColorTheme(colorTheme: ColorTheme): ColorTheme {
   return 'dark';
 }
 
-export function applyColorTheme(colorTheme: ColorTheme) {
+export function applyColorTheme(
+  colorTheme: ColorTheme,
+  options: ApplyColorThemeOptions = {},
+) {
   if (!canUseDocument()) {
     return;
   }
 
-  document.documentElement.classList.toggle(
-    darkThemeClassName,
-    colorTheme === 'dark',
-  );
+  const restoreAppTransitions =
+    options.suppressAppTransitions === true
+      ? suppressAppTransitionsTemporarily()
+      : doNothing;
 
-  document.documentElement.style.colorScheme = colorTheme;
+  setDocumentColorTheme(colorTheme);
+  restoreAppTransitions();
 }
 
 export function saveColorTheme(colorTheme: ColorTheme) {
@@ -49,6 +61,31 @@ export function saveColorTheme(colorTheme: ColorTheme) {
   }
 
   localStorage.setItem(colorThemeStorageKey, colorTheme);
+}
+
+function setDocumentColorTheme(colorTheme: ColorTheme) {
+  document.documentElement.classList.toggle(
+    darkThemeClassName,
+    colorTheme === 'dark',
+  );
+
+  document.documentElement.style.colorScheme = colorTheme;
+}
+
+function suppressAppTransitionsTemporarily() {
+  document.documentElement.classList.add(themeChangeInstantClassName);
+
+  forceStyleRecalculation();
+
+  return () => {
+    window.setTimeout(() => {
+      document.documentElement.classList.remove(themeChangeInstantClassName);
+    }, transitionSuppressionDurationInMilliseconds);
+  };
+}
+
+function forceStyleRecalculation() {
+  document.documentElement.getBoundingClientRect();
 }
 
 function readStoredColorTheme(): ColorTheme | null {
@@ -88,3 +125,5 @@ function canUseDocument() {
 function canUseLocalStorage() {
   return typeof localStorage !== 'undefined';
 }
+
+function doNothing() {}
