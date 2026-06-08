@@ -10,6 +10,7 @@ import { SelectInput } from '@/shared/ui/select-input/SelectInput';
 
 import { flightApplicationFormContent as content } from '@/features/complete-flight-application-form/model/flightApplicationForm.content';
 import type { FlightApplicationFormFieldErrors } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldErrors';
+import { flightApplicationFormFieldNames as fieldNames } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldNames';
 import { SelectOptions } from './SelectOptions';
 
 type FlightRequestFormSectionProps = {
@@ -47,6 +48,7 @@ export function FlightRequestFormSection({
         {(fieldProps) => (
           <SelectInput
             defaultValue=""
+            name={fieldNames.destinationSector}
             {...destinationSectorSelectProps}
             {...fieldProps}
           >
@@ -67,6 +69,7 @@ export function FlightRequestFormSection({
         {(fieldProps) => (
           <SelectInput
             defaultValue=""
+            name={fieldNames.flightPurpose}
             {...flightPurposeSelectProps}
             {...fieldProps}
           >

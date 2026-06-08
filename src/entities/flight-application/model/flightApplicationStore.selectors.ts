@@ -19,3 +19,7 @@ export function selectActiveFlightDossierCount(
 ) {
   return state.flightApplications.length;
 }
+
+export function selectAddFlightApplication(state: FlightApplicationStoreState) {
+  return state.addFlightApplication;
+}

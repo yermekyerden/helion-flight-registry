@@ -7,6 +7,7 @@ import { PasswordInput } from '@/shared/ui/password-input/PasswordInput';
 
 import { flightApplicationFormContent as content } from '@/features/complete-flight-application-form/model/flightApplicationForm.content';
 import type { FlightApplicationFormFieldErrors } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldErrors';
+import { flightApplicationFormFieldNames as fieldNames } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldNames';
 import { PassphraseIntegrityPanel } from '../PassphraseIntegrityPanel';
 
 type SecurityClearanceFormSectionProps = {
@@ -51,6 +52,7 @@ export function SecurityClearanceFormSection({
       >
         {(fieldProps) => (
           <PasswordInput
+            name={fieldNames.password}
             placeholder={content.fields.password.placeholder}
             {...passwordInputProps}
             {...fieldProps}
@@ -65,6 +67,7 @@ export function SecurityClearanceFormSection({
       >
         {(fieldProps) => (
           <PasswordInput
+            name={fieldNames.confirmPassword}
             placeholder={content.fields.confirmPassword.placeholder}
             {...confirmPasswordInputProps}
             {...fieldProps}
@@ -84,6 +87,7 @@ export function SecurityClearanceFormSection({
           {...acceptedTermsInputProps}
           error={errors?.acceptedTerms}
           id={fieldIds.acceptedTerms}
+          name={fieldNames.acceptedTerms}
         >
           {content.fields.acceptedTerms.label}
         </CheckboxField>

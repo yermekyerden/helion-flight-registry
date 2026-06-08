@@ -1,6 +1,10 @@
 import { legacyPilotIntakeShellContent as content } from './LegacyPilotIntakeShell.content';
 import { LegacyPilotIntakeForm } from './LegacyPilotIntakeForm';
 
+type LegacyPilotIntakeShellProps = {
+  onSubmitted?: () => void;
+};
+
 const style = {
   stack: 'space-y-5',
   notice:
@@ -9,7 +13,9 @@ const style = {
   description: 'mt-2 text-sm leading-6 text-zinc-600 dark:text-slate-400',
 } as const;
 
-export function LegacyPilotIntakeShell() {
+export function LegacyPilotIntakeShell({
+  onSubmitted,
+}: LegacyPilotIntakeShellProps) {
   return (
     <div className={style.stack}>
       <section className={style.notice}>
@@ -17,7 +23,7 @@ export function LegacyPilotIntakeShell() {
         <p className={style.description}>{content.description}</p>
       </section>
 
-      <LegacyPilotIntakeForm />
+      <LegacyPilotIntakeForm onSubmitted={onSubmitted} />
     </div>
   );
 }

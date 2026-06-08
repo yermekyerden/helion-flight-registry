@@ -57,7 +57,7 @@ export function StellarFlightRegistryPage() {
         onClose={closeActiveFlow}
         title={content.modal.legacyPilotIntake.title}
       >
-        <LegacyPilotIntakeShell />
+        <LegacyPilotIntakeShell onSubmitted={closeActiveFlow} />
       </Modal>
 
       <Modal

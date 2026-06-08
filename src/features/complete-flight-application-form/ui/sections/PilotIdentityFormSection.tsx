@@ -1,5 +1,8 @@
 import type { ComponentProps } from 'react';
 
+import { flightApplicationFormContent as content } from '@/features/complete-flight-application-form/model/flightApplicationForm.content';
+import type { FlightApplicationFormFieldErrors } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldErrors';
+import { flightApplicationFormFieldNames as fieldNames } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldNames';
 import { identityMarkers } from '@/shared/config/flightApplicationOptions';
 import { formLimits } from '@/shared/config/formLimits';
 import { FileInput } from '@/shared/ui/file-input/FileInput';
@@ -9,8 +12,6 @@ import { NumberInput } from '@/shared/ui/number-input/NumberInput';
 import { SelectInput } from '@/shared/ui/select-input/SelectInput';
 import { TextInput } from '@/shared/ui/text-input/TextInput';
 
-import { flightApplicationFormContent as content } from '@/features/complete-flight-application-form/model/flightApplicationForm.content';
-import type { FlightApplicationFormFieldErrors } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldErrors';
 import { SelectOptions } from './SelectOptions';
 
 type PilotIdentityFormSectionProps = {
@@ -57,6 +58,7 @@ export function PilotIdentityFormSection({
         {(fieldProps) => (
           <TextInput
             maxLength={formLimits.name.maxLength}
+            name={fieldNames.name}
             placeholder={content.fields.name.placeholder}
             {...nameInputProps}
             {...fieldProps}
@@ -73,6 +75,7 @@ export function PilotIdentityFormSection({
           <NumberInput
             max={formLimits.age.max}
             min={formLimits.age.min}
+            name={fieldNames.age}
             placeholder={content.fields.age.placeholder}
             {...ageInputProps}
             {...fieldProps}
@@ -89,6 +92,7 @@ export function PilotIdentityFormSection({
         >
           {(fieldProps) => (
             <TextInput
+              name={fieldNames.email}
               placeholder={content.fields.email.placeholder}
               {...emailInputProps}
               {...fieldProps}
@@ -103,7 +107,12 @@ export function PilotIdentityFormSection({
         label={content.fields.gender.label}
       >
         {(fieldProps) => (
-          <SelectInput defaultValue="" {...genderSelectProps} {...fieldProps}>
+          <SelectInput
+            defaultValue=""
+            name={fieldNames.gender}
+            {...genderSelectProps}
+            {...fieldProps}
+          >
             <option disabled value="">
               {content.selectPlaceholder}
             </option>
@@ -122,8 +131,9 @@ export function PilotIdentityFormSection({
         >
           {(fieldProps) => (
             <FileInput
-              {...pilotPhotoInputProps}
               accept={acceptedImageMimeTypes}
+              name={fieldNames.pilotPhoto}
+              {...pilotPhotoInputProps}
               {...fieldProps}
             />
           )}

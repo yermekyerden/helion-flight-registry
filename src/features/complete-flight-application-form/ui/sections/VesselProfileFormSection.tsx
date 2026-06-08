@@ -10,6 +10,7 @@ import { TextInput } from '@/shared/ui/text-input/TextInput';
 
 import { flightApplicationFormContent as content } from '@/features/complete-flight-application-form/model/flightApplicationForm.content';
 import type { FlightApplicationFormFieldErrors } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldErrors';
+import { flightApplicationFormFieldNames as fieldNames } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldNames';
 import { SelectOptions } from './SelectOptions';
 
 type VesselProfileFormSectionProps = {
@@ -47,6 +48,7 @@ export function VesselProfileFormSection({
         {(fieldProps) => (
           <TextInput
             maxLength={formLimits.vesselName.maxLength}
+            name={fieldNames.vesselName}
             placeholder={content.fields.vesselName.placeholder}
             {...vesselNameInputProps}
             {...fieldProps}
@@ -62,6 +64,7 @@ export function VesselProfileFormSection({
         {(fieldProps) => (
           <SelectInput
             defaultValue=""
+            name={fieldNames.vesselClass}
             {...vesselClassSelectProps}
             {...fieldProps}
           >
@@ -83,6 +86,7 @@ export function VesselProfileFormSection({
           <NumberInput
             max={formLimits.crewCapacity.max}
             min={formLimits.crewCapacity.min}
+            name={fieldNames.crewCapacity}
             placeholder={content.fields.crewCapacity.placeholder}
             {...crewCapacityInputProps}
             {...fieldProps}
@@ -99,6 +103,7 @@ export function VesselProfileFormSection({
         {(fieldProps) => (
           <TextInput
             maxLength={formLimits.callsign.maxLength}
+            name={fieldNames.callsign}
             placeholder={content.fields.callsign.placeholder}
             {...callsignInputProps}
             {...fieldProps}

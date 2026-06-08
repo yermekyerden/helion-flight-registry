@@ -12,6 +12,7 @@ import { TextInput } from '@/shared/ui/text-input/TextInput';
 
 import { flightApplicationFormContent as content } from '@/features/complete-flight-application-form/model/flightApplicationForm.content';
 import type { FlightApplicationFormFieldErrors } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldErrors';
+import { flightApplicationFormFieldNames as fieldNames } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldNames';
 import { SelectOptions } from './SelectOptions';
 
 type OriginRegistryFormSectionProps = {
@@ -53,6 +54,7 @@ export function OriginRegistryFormSection({
         {(fieldProps) => (
           <SelectInput
             defaultValue=""
+            name={fieldNames.originSector}
             {...originSectorSelectProps}
             {...fieldProps}
           >
@@ -73,6 +75,7 @@ export function OriginRegistryFormSection({
         {(fieldProps) => (
           <TextInput
             maxLength={formLimits.originWorld.maxLength}
+            name={fieldNames.originWorld}
             placeholder={content.fields.originWorld.placeholder}
             {...originWorldInputProps}
             {...fieldProps}
@@ -90,6 +93,7 @@ export function OriginRegistryFormSection({
           {(fieldProps) => (
             <SelectInput
               defaultValue=""
+              name={fieldNames.country}
               {...countrySelectProps}
               {...fieldProps}
             >
