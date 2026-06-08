@@ -7,7 +7,7 @@ import { readLegacyPilotIntakeFormData } from './readLegacyPilotIntakeFormData';
 
 describe('readLegacyPilotIntakeFormData', () => {
   afterEach(() => {
-    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
   });
 
   it('reads submitted values from legacy form data', () => {

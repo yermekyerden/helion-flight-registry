@@ -1,6 +1,32 @@
 import { flightApplicationFormFieldNames as fieldNames } from './flightApplicationFormFieldNames';
 
-export function readLegacyPilotIntakeFormData(formElement: HTMLFormElement) {
+export type LegacyPilotIntakeFormData = {
+  name: string;
+  age: string;
+  email: string;
+  gender: string;
+  pilotPhoto: File | undefined;
+
+  originSector: string;
+  originWorld: string;
+  country: string;
+
+  vesselName: string;
+  vesselClass: string;
+  crewCapacity: string;
+  callsign: string;
+
+  destinationSector: string;
+  flightPurpose: string;
+
+  password: string;
+  confirmPassword: string;
+  acceptedTerms: boolean;
+};
+
+export function readLegacyPilotIntakeFormData(
+  formElement: HTMLFormElement,
+): LegacyPilotIntakeFormData {
   const formData = new FormData(formElement);
 
   return {

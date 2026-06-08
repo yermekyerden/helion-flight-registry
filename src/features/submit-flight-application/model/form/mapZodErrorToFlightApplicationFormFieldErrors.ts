@@ -18,7 +18,7 @@ export function mapZodErrorToFlightApplicationFormFieldErrors(
       continue;
     }
 
-    if (mappedErrors[fieldName]) {
+    if (fieldName in mappedErrors) {
       continue;
     }
 
