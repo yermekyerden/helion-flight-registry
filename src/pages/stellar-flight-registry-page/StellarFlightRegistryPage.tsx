@@ -5,7 +5,7 @@ import { AssistedFlightClearanceShell } from '@/features/submit-flight-applicati
 import { LegacyPilotIntakeShell } from '@/features/submit-flight-application-legacy/ui/LegacyPilotIntakeShell';
 import { ThemeToggle } from '@/features/toggle-color-theme/ui/ThemeToggle';
 import { cn } from '@/shared/lib/class-name/cn';
-import { SpaceBackground } from '@/shared/ui/background/SpaceBackground';
+import { RegistryBackground } from '@/shared/ui/background/RegistryBackground';
 import { Modal } from '@/shared/ui/modal/Modal';
 import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
 import { FlightApplicationLauncher } from '@/widgets/flight-application-launcher/FlightApplicationLauncher';
@@ -35,7 +35,7 @@ export function StellarFlightRegistryPage() {
 
   return (
     <main className={cn(style.page, themeClassNames.page)}>
-      <SpaceBackground />
+      <RegistryBackground />
 
       <section className={style.container}>
         <header className={cn(style.hero, themeClassNames.surface.panel)}>

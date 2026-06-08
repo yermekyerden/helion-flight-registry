@@ -27,14 +27,46 @@ const faintStarClassNames = [
   'left-[94%] top-[88%]',
 ] as const;
 
+const registryLineClassNames = [
+  'left-[8%] top-[18%] w-40 rotate-[-12deg] bg-amber-300/20',
+  'right-[12%] top-[30%] w-56 rotate-[8deg] bg-cyan-300/20',
+  'left-[18%] bottom-[22%] w-64 rotate-[5deg] bg-zinc-300/45',
+  'right-[22%] bottom-[14%] w-44 rotate-[-10deg] bg-amber-300/20',
+] as const;
+
+const documentPanelClassNames = [
+  'left-[-7rem] top-24 h-72 w-96 rotate-[-8deg]',
+  'right-[-8rem] top-48 h-80 w-[28rem] rotate-[10deg]',
+  'bottom-[-7rem] left-[18%] h-72 w-[34rem] rotate-[3deg]',
+] as const;
+
 const style = {
   root: 'pointer-events-none absolute inset-0 z-0 overflow-hidden',
-  darkLayer: 'absolute inset-0 hidden dark:block',
+
   lightLayer: 'absolute inset-0 block dark:hidden',
-  lightGlow:
-    'absolute -top-32 right-[-8rem] h-96 w-96 rounded-full bg-amber-200/30 blur-3xl',
-  lightGlowSecondary:
-    'absolute bottom-[-10rem] left-[-6rem] h-96 w-96 rounded-full bg-cyan-100/40 blur-3xl',
+  lightBase:
+    'absolute inset-0 bg-gradient-to-b from-zinc-100 via-zinc-100 to-zinc-200',
+  lightGrid:
+    'absolute inset-0 opacity-[0.36] [background-image:linear-gradient(to_right,rgb(212_212_216_/_0.55)_1px,transparent_1px),linear-gradient(to_bottom,rgb(212_212_216_/_0.55)_1px,transparent_1px)] [background-size:48px_48px]',
+  lightFineGrid:
+    'absolute inset-0 opacity-[0.18] [background-image:linear-gradient(to_right,rgb(245_158_11_/_0.35)_1px,transparent_1px),linear-gradient(to_bottom,rgb(34_211_238_/_0.22)_1px,transparent_1px)] [background-size:192px_192px]',
+  lightGlowAmber:
+    'absolute -top-36 right-[-8rem] h-[28rem] w-[28rem] rounded-full bg-amber-200/35 blur-3xl',
+  lightGlowCyan:
+    'absolute bottom-[-12rem] left-[-8rem] h-[30rem] w-[30rem] rounded-full bg-cyan-100/55 blur-3xl',
+  lightGlowNeutral:
+    'absolute left-[34%] top-[22%] h-72 w-72 rounded-full bg-white/40 blur-3xl',
+  documentPanel:
+    'absolute rounded-[2rem] border border-zinc-300/50 bg-white/35 shadow-sm',
+  registryLine: 'absolute h-px rounded-full',
+  stamp:
+    'absolute right-[12%] top-[12%] h-36 w-36 rounded-full border border-amber-300/25',
+  stampInner:
+    'absolute right-[calc(12%+1.75rem)] top-[calc(12%+1.75rem)] h-20 w-20 rounded-full border border-cyan-300/25',
+  lightVignette:
+    'absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_58%,rgb(228_228_231_/_0.55)_100%)]',
+
+  darkLayer: 'absolute inset-0 hidden dark:block',
   deepSpace:
     'absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950 to-black',
   topNebula:
@@ -53,16 +85,33 @@ const style = {
     'absolute right-[-12%] top-[66%] h-px w-[70%] rotate-[10deg] bg-gradient-to-r from-transparent via-violet-300/10 to-transparent',
   star: 'absolute rounded-full shadow-sm',
   faintStar: 'absolute h-0.5 w-0.5 rounded-full bg-white/25',
-  vignette:
+  darkVignette:
     'absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_45%,rgb(0_0_0_/_0.34)_100%)]',
 } as const;
 
-export function SpaceBackground() {
+export function RegistryBackground() {
   return (
     <div aria-hidden="true" className={style.root}>
       <div className={style.lightLayer}>
-        <div className={style.lightGlow} />
-        <div className={style.lightGlowSecondary} />
+        <div className={style.lightBase} />
+        <div className={style.lightGlowAmber} />
+        <div className={style.lightGlowCyan} />
+        <div className={style.lightGlowNeutral} />
+
+        {documentPanelClassNames.map((className) => (
+          <div className={cn(style.documentPanel, className)} key={className} />
+        ))}
+
+        <div className={style.lightGrid} />
+        <div className={style.lightFineGrid} />
+
+        {registryLineClassNames.map((className) => (
+          <div className={cn(style.registryLine, className)} key={className} />
+        ))}
+
+        <div className={style.stamp} />
+        <div className={style.stampInner} />
+        <div className={style.lightVignette} />
       </div>
 
       <div className={style.darkLayer}>
@@ -85,7 +134,7 @@ export function SpaceBackground() {
           <span className={cn(style.faintStar, className)} key={className} />
         ))}
 
-        <div className={style.vignette} />
+        <div className={style.darkVignette} />
       </div>
     </div>
   );
