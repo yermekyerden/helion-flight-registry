@@ -22,38 +22,36 @@ export type FlightApplicationProtocol = 'legacy' | 'assisted';
 
 export type FlightApplicationStatus = 'pending-review';
 
-export type PilotIdentity = {
+export interface PilotIdentity {
   name: string;
   age: number;
   email: string;
   identityMarker: IdentityMarker;
   pilotPhotoDataUrl: string;
-};
+}
 
-export type OriginRegistry = {
+export interface OriginRegistry {
   originSector: OriginSector;
   originWorld: string;
   originAuthority: OriginAuthority;
-};
+}
 
-export type VesselProfile = {
+export interface VesselProfile {
   vesselName: string;
   vesselClass: VesselClass;
   crewCapacity: number;
   callsign: string;
-};
+}
 
-export type FlightRequest = {
+export interface FlightRequest {
   destinationSector: DestinationSector;
   flightPurpose: FlightPurpose;
-};
+}
 
-export type FlightApplication = PilotIdentity &
-  OriginRegistry &
-  VesselProfile &
-  FlightRequest & {
-    id: string;
-    submittedAt: string;
-    protocol: FlightApplicationProtocol;
-    status: FlightApplicationStatus;
-  };
+export interface FlightApplication
+  extends PilotIdentity, OriginRegistry, VesselProfile, FlightRequest {
+  id: string;
+  submittedAt: string;
+  protocol: FlightApplicationProtocol;
+  status: FlightApplicationStatus;
+}

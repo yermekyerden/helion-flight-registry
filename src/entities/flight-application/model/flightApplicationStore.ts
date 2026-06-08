@@ -7,13 +7,15 @@ import type {
   OriginAuthority,
 } from './flightApplication.types';
 
-export type FlightApplicationStoreState = {
+const flightApplicationStoreStorageKey = 'helion-flight-registry';
+
+export interface FlightApplicationStoreState {
   flightApplications: FlightApplication[];
   latestFlightApplicationId: string | null;
   originCountryOptions: readonly OriginAuthority[];
   addFlightApplication: (flightApplication: FlightApplication) => void;
   clearFlightApplications: () => void;
-};
+}
 
 export const useFlightApplicationStore = create<FlightApplicationStoreState>()(
   persist(
@@ -37,7 +39,7 @@ export const useFlightApplicationStore = create<FlightApplicationStoreState>()(
       },
     }),
     {
-      name: 'helion-flight-registry',
+      name: flightApplicationStoreStorageKey,
       partialize: (state) => ({
         flightApplications: state.flightApplications,
         latestFlightApplicationId: state.latestFlightApplicationId,
