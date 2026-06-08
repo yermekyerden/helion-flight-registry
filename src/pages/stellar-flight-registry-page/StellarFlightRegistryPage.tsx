@@ -4,6 +4,8 @@ import type { FlightApplicationProtocol } from '@/entities/flight-application/mo
 import { AssistedFlightClearanceShell } from '@/features/submit-flight-application-assisted/ui/AssistedFlightClearanceShell';
 import { LegacyPilotIntakeShell } from '@/features/submit-flight-application-legacy/ui/LegacyPilotIntakeShell';
 import { ThemeToggle } from '@/features/toggle-color-theme/ui/ThemeToggle';
+import { cn } from '@/shared/lib/class-name/cn';
+import { SpaceBackground } from '@/shared/ui/background/SpaceBackground';
 import { Modal } from '@/shared/ui/modal/Modal';
 import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
 import { FlightApplicationLauncher } from '@/widgets/flight-application-launcher/FlightApplicationLauncher';
@@ -13,9 +15,9 @@ import { RegistryStatusSummary } from '@/widgets/registry-status-summary/Registr
 import { stellarFlightRegistryPageContent as content } from './stellarFlightRegistryPage.content';
 
 const style = {
-  page: 'min-h-screen px-6 py-10',
-  container: 'mx-auto flex max-w-5xl flex-col gap-8',
-  hero: 'rounded-3xl border p-8 shadow-sm',
+  page: 'relative isolate min-h-screen overflow-hidden px-6 py-10',
+  container: 'relative z-10 mx-auto flex max-w-5xl flex-col gap-8',
+  hero: 'rounded-3xl border p-8 shadow-sm backdrop-blur-sm',
   heroTop: 'flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between',
   heroContent: 'min-w-0',
   heroEyebrow: 'text-sm font-semibold tracking-[0.3em] uppercase',
@@ -32,25 +34,28 @@ export function StellarFlightRegistryPage() {
   const isAssistedModalOpen = activeProtocol === 'assisted';
 
   return (
-    <main className={`${style.page} ${themeClassNames.page}`}>
+    <main className={cn(style.page, themeClassNames.page)}>
+      <SpaceBackground />
+
       <section className={style.container}>
-        <header className={`${style.hero} ${themeClassNames.surface.panel}`}>
+        <header className={cn(style.hero, themeClassNames.surface.panel)}>
           <div className={style.heroTop}>
             <div className={style.heroContent}>
               <p
-                className={`${style.heroEyebrow} ${themeClassNames.text.eyebrow}`}
+                className={cn(style.heroEyebrow, themeClassNames.text.eyebrow)}
               >
                 {hero.eyebrow}
               </p>
 
-              <h1
-                className={`${style.heroTitle} ${themeClassNames.text.primary}`}
-              >
+              <h1 className={cn(style.heroTitle, themeClassNames.text.primary)}>
                 {hero.title}
               </h1>
 
               <p
-                className={`${style.heroDescription} ${themeClassNames.text.muted}`}
+                className={cn(
+                  style.heroDescription,
+                  themeClassNames.text.muted,
+                )}
               >
                 {hero.description}
               </p>
