@@ -1,6 +1,9 @@
 import { useState, type ChangeEvent, type ComponentPropsWithRef } from 'react';
 
-import { selectAddFlightApplication } from '@/entities/flight-application/model/flightApplicationStore.selectors';
+import {
+  selectAddFlightApplication,
+  selectOriginCountryOptions,
+} from '@/entities/flight-application/model/flightApplicationStore.selectors';
 import { useFlightApplicationStore } from '@/entities/flight-application/model/flightApplicationStore';
 import { flightApplicationFormContent as content } from '@/features/complete-flight-application-form/model/flightApplicationForm.content';
 import type { FlightApplicationFormFieldErrors } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldErrors';
@@ -38,6 +41,8 @@ export function LegacyPilotIntakeForm({
     selectAddFlightApplication,
   );
 
+  const countryOptions = useFlightApplicationStore(selectOriginCountryOptions);
+
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState<FlightApplicationFormFieldErrors>({});
   const [password, setPassword] = useState('');
@@ -50,7 +55,12 @@ export function LegacyPilotIntakeForm({
       onSubmit={handleFormSubmit}
     >
       <PilotIdentityFormSection errors={errors} />
-      <OriginRegistryFormSection errors={errors} />
+
+      <OriginRegistryFormSection
+        countryOptions={countryOptions}
+        errors={errors}
+      />
+
       <VesselProfileFormSection errors={errors} />
       <FlightRequestFormSection errors={errors} />
 

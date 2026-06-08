@@ -1,7 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useWatch } from 'react-hook-form';
 
-import { selectAddFlightApplication } from '@/entities/flight-application/model/flightApplicationStore.selectors';
+import {
+  selectAddFlightApplication,
+  selectOriginCountryOptions,
+} from '@/entities/flight-application/model/flightApplicationStore.selectors';
 import { useFlightApplicationStore } from '@/entities/flight-application/model/flightApplicationStore';
 import { flightApplicationFormContent as content } from '@/features/complete-flight-application-form/model/flightApplicationForm.content';
 import { flightApplicationFormFieldNames as fieldNames } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldNames';
@@ -37,6 +40,8 @@ export function AssistedFlightClearanceForm({
     selectAddFlightApplication,
   );
 
+  const countryOptions = useFlightApplicationStore(selectOriginCountryOptions);
+
   const {
     control,
     formState: { errors, isSubmitting, isValid },
@@ -67,10 +72,6 @@ export function AssistedFlightClearanceForm({
   const fieldErrors =
     mapReactHookFormErrorsToFlightApplicationFormFieldErrors(errors);
 
-  function handleFormReset() {
-    reset();
-  }
-
   async function handleValidSubmit(formValues: FlightApplicationFormValues) {
     const pilotPhotoDataUrl = await readFileAsDataUrl(formValues.pilotPhoto);
 
@@ -85,6 +86,10 @@ export function AssistedFlightClearanceForm({
     addFlightApplication(flightApplication);
     reset();
     onSubmitted?.();
+  }
+
+  function handleFormReset() {
+    reset();
   }
 
   return (
@@ -104,7 +109,8 @@ export function AssistedFlightClearanceForm({
       />
 
       <OriginRegistryFormSection
-        countrySelectProps={register(fieldNames.country)}
+        countryInputProps={register(fieldNames.country)}
+        countryOptions={countryOptions}
         errors={fieldErrors}
         originSectorSelectProps={register(fieldNames.originSector)}
         originWorldInputProps={register(fieldNames.originWorld)}

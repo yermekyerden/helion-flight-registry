@@ -57,6 +57,7 @@ export function PilotIdentityFormSection({
       >
         {(fieldProps) => (
           <TextInput
+            autoComplete="name"
             maxLength={formLimits.name.maxLength}
             name={fieldNames.name}
             placeholder={content.fields.name.placeholder}
@@ -73,6 +74,7 @@ export function PilotIdentityFormSection({
       >
         {(fieldProps) => (
           <NumberInput
+            autoComplete="off"
             max={formLimits.age.max}
             min={formLimits.age.min}
             name={fieldNames.age}
@@ -92,6 +94,7 @@ export function PilotIdentityFormSection({
         >
           {(fieldProps) => (
             <TextInput
+              autoComplete="email"
               name={fieldNames.email}
               placeholder={content.fields.email.placeholder}
               {...emailInputProps}

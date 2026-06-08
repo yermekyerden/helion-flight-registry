@@ -1,22 +1,24 @@
 import type { ComponentProps } from 'react';
 
-import {
-  originAuthorities,
-  originSectors,
-} from '@/shared/config/flightApplicationOptions';
+import { flightApplicationFormContent as content } from '@/features/complete-flight-application-form/model/flightApplicationForm.content';
+import type { FlightApplicationFormFieldErrors } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldErrors';
+import { flightApplicationFormFieldNames as fieldNames } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldNames';
+import { originSectors } from '@/shared/config/flightApplicationOptions';
 import { formLimits } from '@/shared/config/formLimits';
+import { AutocompleteInput } from '@/shared/ui/autocomplete-input/AutocompleteInput';
 import { FormField } from '@/shared/ui/form-field/FormField';
 import { FormSection } from '@/shared/ui/form-section/FormSection';
 import { SelectInput } from '@/shared/ui/select-input/SelectInput';
 import { TextInput } from '@/shared/ui/text-input/TextInput';
 
-import { flightApplicationFormContent as content } from '@/features/complete-flight-application-form/model/flightApplicationForm.content';
-import type { FlightApplicationFormFieldErrors } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldErrors';
-import { flightApplicationFormFieldNames as fieldNames } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldNames';
 import { SelectOptions } from './SelectOptions';
 
 type OriginRegistryFormSectionProps = {
-  countrySelectProps?: Omit<ComponentProps<typeof SelectInput>, 'children'>;
+  countryInputProps?: Omit<
+    ComponentProps<typeof AutocompleteInput>,
+    'listId' | 'options'
+  >;
+  countryOptions: readonly string[];
   errors?: FlightApplicationFormFieldErrors;
   originSectorSelectProps?: Omit<
     ComponentProps<typeof SelectInput>,
@@ -29,6 +31,7 @@ const fieldIds = {
   originSector: 'flight-application-origin-sector',
   originWorld: 'flight-application-origin-world',
   country: 'flight-application-country',
+  countryOptions: 'flight-application-country-options',
 } as const;
 
 const style = {
@@ -36,7 +39,8 @@ const style = {
 } as const;
 
 export function OriginRegistryFormSection({
-  countrySelectProps,
+  countryInputProps,
+  countryOptions,
   errors,
   originSectorSelectProps,
   originWorldInputProps,
@@ -74,6 +78,7 @@ export function OriginRegistryFormSection({
       >
         {(fieldProps) => (
           <TextInput
+            autoComplete="off"
             maxLength={formLimits.originWorld.maxLength}
             name={fieldNames.originWorld}
             placeholder={content.fields.originWorld.placeholder}
@@ -91,18 +96,15 @@ export function OriginRegistryFormSection({
           label={content.fields.country.label}
         >
           {(fieldProps) => (
-            <SelectInput
-              defaultValue=""
+            <AutocompleteInput
+              autoComplete="country-name"
+              listId={fieldIds.countryOptions}
               name={fieldNames.country}
-              {...countrySelectProps}
+              options={countryOptions}
+              placeholder={content.fields.country.placeholder}
+              {...countryInputProps}
               {...fieldProps}
-            >
-              <option disabled value="">
-                {content.selectPlaceholder}
-              </option>
-
-              <SelectOptions options={originAuthorities} />
-            </SelectInput>
+            />
           )}
         </FormField>
       </div>
