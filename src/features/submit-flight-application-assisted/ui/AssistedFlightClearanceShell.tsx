@@ -1,7 +1,9 @@
+import { FlightApplicationFormPreview } from '@/features/complete-flight-application-form/ui/FlightApplicationFormPreview';
+
 import { assistedFlightClearanceShellContent as content } from './AssistedFlightClearanceShell.content';
 
 const style = {
-  stack: 'space-y-4',
+  stack: 'space-y-5',
   notice:
     'rounded-2xl border border-amber-300 bg-amber-50 p-5 dark:border-amber-500/40 dark:bg-amber-500/10',
   title: 'font-semibold text-zinc-950 dark:text-zinc-100',
@@ -13,9 +15,10 @@ export function AssistedFlightClearanceShell() {
     <div className={style.stack}>
       <section className={style.notice}>
         <h3 className={style.title}>{content.title}</h3>
-
         <p className={style.description}>{content.description}</p>
       </section>
+
+      <FlightApplicationFormPreview />
     </div>
   );
 }

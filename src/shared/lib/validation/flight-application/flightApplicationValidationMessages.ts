@@ -4,9 +4,9 @@ export const flightApplicationValidationMessages = {
   pilotIdentity: {
     nameTooShort: `Full legal name must contain at least ${formLimits.name.minLength} characters.`,
     nameTooLong: `Full legal name must contain no more than ${formLimits.name.maxLength} characters.`,
-    ageNotInteger: 'Biological age must be a whole number.',
-    ageTooLow: `Biological age must be at least ${formLimits.age.min}.`,
-    ageTooHigh: `Biological age must be no more than ${formLimits.age.max}.`,
+    ageNotInteger: 'Registry age must be a whole number.',
+    ageTooLow: `Registry age must be at least ${formLimits.age.min}.`,
+    ageTooHigh: `Registry age must be no more than ${formLimits.age.max}.`,
     invalidEmail: 'Relay email must contain one @ symbol and a valid domain.',
     missingIdentityMarker: 'Identity marker is required.',
     missingPilotPhoto: 'Pilot photo is required.',

@@ -4,8 +4,8 @@ export const formLimits = {
     maxLength: 80,
   },
   age: {
-    min: 18,
-    max: 120,
+    min: 16,
+    max: 240,
   },
   originWorld: {
     minLength: 2,
