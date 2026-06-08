@@ -1,7 +1,18 @@
-# RS React 2026: Tiny Portal Lab
+# Helion Flight Registry
 
-A private React training lab for RS School tasks.
+Internal clearance terminal of the **Celestial Transit Authority**.
 
-Current mission: build a clean, typed, class-component React app without turning the codebase into an interdimensional mess.
+The Helion Flight Registry processes pilot dossiers, verifies origin authorities, registers vessel profiles, and prepares interstellar flight clearance packets for sector travel.
 
-The first portal opens with **Character Explorer** — a small Rick and Morty API app focused on search, local storage, API states, and error boundaries.
+```text
+Registry: Helion Flight Registry
+Clearance Node: Terra-Orbit / 07
+Status: Online
+Dossier State: Pending Review
+```
+
+## Live Demo
+
+```text
+https://yermekyerden.github.io/helion-flight-registry/
+```
