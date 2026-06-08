@@ -98,7 +98,6 @@ export function AssistedFlightClearanceForm({
     <form
       className={style.form}
       noValidate
-      onReset={handleFormReset}
       onSubmit={handleSubmit(handleValidSubmit)}
     >
       <PilotIdentityFormSection
@@ -142,7 +141,7 @@ export function AssistedFlightClearanceForm({
       />
 
       <div className={cn(style.actions, themeClassNames.border.divider)}>
-        <Button type="reset" variant="secondary">
+        <Button onClick={handleFormReset} type="button" variant="secondary">
           {content.actions.resetButtonLabel}
         </Button>
 
