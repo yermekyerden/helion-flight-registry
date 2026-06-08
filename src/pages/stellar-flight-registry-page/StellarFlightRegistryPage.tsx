@@ -67,7 +67,7 @@ export function StellarFlightRegistryPage() {
         onClose={closeActiveFlow}
         title={content.modal.assistedFlightClearance.title}
       >
-        <AssistedFlightClearanceShell />
+        <AssistedFlightClearanceShell onSubmitted={closeActiveFlow} />
       </Modal>
     </main>
   );

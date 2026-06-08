@@ -25,6 +25,10 @@ export function createFlightApplicationFormSchema(
 
 export const flightApplicationFormSchema = createFlightApplicationFormSchema();
 
-export type FlightApplicationFormValues = z.infer<
+export type FlightApplicationFormInputValues = z.input<
+  typeof flightApplicationFormSchema
+>;
+
+export type FlightApplicationFormValues = z.output<
   typeof flightApplicationFormSchema
 >;

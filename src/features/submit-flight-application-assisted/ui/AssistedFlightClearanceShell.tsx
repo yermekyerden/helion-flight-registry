@@ -1,6 +1,10 @@
 import { assistedFlightClearanceShellContent as content } from './AssistedFlightClearanceShell.content';
 import { AssistedFlightClearanceForm } from './AssistedFlightClearanceForm';
 
+type AssistedFlightClearanceShellProps = {
+  onSubmitted?: () => void;
+};
+
 const style = {
   stack: 'space-y-5',
   notice:
@@ -9,7 +13,9 @@ const style = {
   description: 'mt-2 text-sm leading-6 text-zinc-700 dark:text-slate-300',
 } as const;
 
-export function AssistedFlightClearanceShell() {
+export function AssistedFlightClearanceShell({
+  onSubmitted,
+}: AssistedFlightClearanceShellProps) {
   return (
     <div className={style.stack}>
       <section className={style.notice}>
@@ -17,7 +23,7 @@ export function AssistedFlightClearanceShell() {
         <p className={style.description}>{content.description}</p>
       </section>
 
-      <AssistedFlightClearanceForm />
+      <AssistedFlightClearanceForm onSubmitted={onSubmitted} />
     </div>
   );
 }
