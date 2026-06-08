@@ -39,6 +39,13 @@ export const flightApplicationValidationMessages = {
 
   securityClearance: {
     passwordTooShort: `Access passphrase must contain at least ${formLimits.password.minLength} characters.`,
+    passwordMissingNumber: 'Access passphrase must contain at least 1 number.',
+    passwordMissingUppercaseLetter:
+      'Access passphrase must contain at least 1 uppercase letter.',
+    passwordMissingLowercaseLetter:
+      'Access passphrase must contain at least 1 lowercase letter.',
+    passwordMissingSpecialCharacter:
+      'Access passphrase must contain at least 1 special character.',
     termsNotAccepted: 'Stellar Flight Protocol must be accepted.',
     passwordsDoNotMatch: 'Access passphrases must match.',
   },

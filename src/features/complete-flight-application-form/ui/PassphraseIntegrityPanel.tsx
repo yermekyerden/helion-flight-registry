@@ -23,6 +23,7 @@ const style = {
   header: 'flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between',
   title: 'text-sm font-semibold text-zinc-950 dark:text-zinc-100',
   description: 'mt-1 text-xs leading-5 text-zinc-500 dark:text-slate-400',
+  score: 'mt-3 text-xs font-semibold text-zinc-600 dark:text-slate-300',
   status:
     'rounded-full border px-3 py-1 text-xs font-semibold whitespace-nowrap',
   statusIdle:
@@ -31,7 +32,7 @@ const style = {
     'border-amber-300 text-amber-700 dark:border-amber-500/50 dark:text-amber-300',
   statusReady:
     'border-emerald-300 text-emerald-700 dark:border-emerald-500/50 dark:text-emerald-300',
-  list: 'mt-4 space-y-2',
+  list: 'mt-4 grid gap-2 sm:grid-cols-2',
   item: 'flex items-center gap-2 text-xs leading-5 text-zinc-600 dark:text-slate-300',
   indicator:
     'flex h-5 w-5 items-center justify-center rounded-full border text-[10px] font-bold',
@@ -57,8 +58,15 @@ export function PassphraseIntegrityPanel({
       <div className={style.header}>
         <div>
           <h4 className={style.title}>{content.passphraseIntegrity.title}</h4>
+
           <p className={style.description}>
             {content.passphraseIntegrity.description}
+          </p>
+
+          <p className={style.score}>
+            {content.passphraseIntegrity.strengthScoreLabel}:{' '}
+            {integrityState.satisfiedStrengthRequirementCount}/
+            {integrityState.requiredStrengthRequirementCount}
           </p>
         </div>
 
@@ -93,6 +101,22 @@ function createPassphraseRequirementViews(
     {
       isSatisfied: integrityState.hasMinimumLength,
       label: content.passphraseIntegrity.requirements.minimumLength,
+    },
+    {
+      isSatisfied: integrityState.hasNumber,
+      label: content.passphraseIntegrity.requirements.number,
+    },
+    {
+      isSatisfied: integrityState.hasUppercaseLetter,
+      label: content.passphraseIntegrity.requirements.uppercaseLetter,
+    },
+    {
+      isSatisfied: integrityState.hasLowercaseLetter,
+      label: content.passphraseIntegrity.requirements.lowercaseLetter,
+    },
+    {
+      isSatisfied: integrityState.hasSpecialCharacter,
+      label: content.passphraseIntegrity.requirements.specialCharacter,
     },
     {
       isSatisfied: integrityState.hasMatchingConfirmation,

@@ -109,6 +109,7 @@ export const flightApplicationFormContent = {
     title: 'Passphrase integrity',
     description:
       'Registry checks update while the access passphrase is entered.',
+    strengthScoreLabel: 'Passphrase strength',
     status: {
       idle: 'Awaiting passphrase',
       incomplete: 'Incomplete',
@@ -116,6 +117,10 @@ export const flightApplicationFormContent = {
     },
     requirements: {
       minimumLength: `At least ${formLimits.password.minLength} characters`,
+      number: 'At least 1 number',
+      uppercaseLetter: 'At least 1 uppercase letter',
+      lowercaseLetter: 'At least 1 lowercase letter',
+      specialCharacter: 'At least 1 special character',
       confirmationMatch: 'Confirmation matches access passphrase',
     },
     requirementStatus: {

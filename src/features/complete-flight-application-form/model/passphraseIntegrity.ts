@@ -1,11 +1,18 @@
-import { formLimits } from '@/shared/config/formLimits';
+import { getPasswordStrengthState } from '@/shared/lib/validation/flight-application/passwordStrength';
 
 export type PassphraseIntegrityStatus = 'idle' | 'incomplete' | 'ready';
 
 export type PassphraseIntegrityState = {
+  hasLowercaseLetter: boolean;
   hasMatchingConfirmation: boolean;
   hasMinimumLength: boolean;
+  hasNumber: boolean;
   hasPassword: boolean;
+  hasSpecialCharacter: boolean;
+  hasUppercaseLetter: boolean;
+  isPasswordStrong: boolean;
+  requiredStrengthRequirementCount: number;
+  satisfiedStrengthRequirementCount: number;
   status: PassphraseIntegrityStatus;
 };
 
@@ -14,31 +21,42 @@ type PassphraseIntegrityCandidate = {
   password: string;
 };
 
+type PassphraseIntegrityStatusCandidate = {
+  hasMatchingConfirmation: boolean;
+  hasPassword: boolean;
+  isPasswordStrong: boolean;
+};
+
 export function getPassphraseIntegrityState({
   confirmPassword,
   password,
 }: PassphraseIntegrityCandidate): PassphraseIntegrityState {
   const hasPassword = password.length > 0;
-  const hasMinimumLength = hasRequiredPassphraseLength(password);
+  const passwordStrength = getPasswordStrengthState(password);
+
   const hasMatchingConfirmation = hasConfirmedPassphrase({
     confirmPassword,
     password,
   });
 
   return {
+    hasLowercaseLetter: passwordStrength.hasLowercaseLetter,
     hasMatchingConfirmation,
-    hasMinimumLength,
+    hasMinimumLength: passwordStrength.hasMinimumLength,
+    hasNumber: passwordStrength.hasNumber,
     hasPassword,
+    hasSpecialCharacter: passwordStrength.hasSpecialCharacter,
+    hasUppercaseLetter: passwordStrength.hasUppercaseLetter,
+    isPasswordStrong: passwordStrength.isStrong,
+    requiredStrengthRequirementCount: passwordStrength.requiredRequirementCount,
+    satisfiedStrengthRequirementCount:
+      passwordStrength.satisfiedRequirementCount,
     status: getPassphraseIntegrityStatus({
       hasMatchingConfirmation,
-      hasMinimumLength,
       hasPassword,
+      isPasswordStrong: passwordStrength.isStrong,
     }),
   };
-}
-
-function hasRequiredPassphraseLength(password: string) {
-  return password.length >= formLimits.password.minLength;
 }
 
 function hasConfirmedPassphrase({
@@ -50,14 +68,14 @@ function hasConfirmedPassphrase({
 
 function getPassphraseIntegrityStatus({
   hasMatchingConfirmation,
-  hasMinimumLength,
   hasPassword,
-}: Omit<PassphraseIntegrityState, 'status'>): PassphraseIntegrityStatus {
+  isPasswordStrong,
+}: PassphraseIntegrityStatusCandidate): PassphraseIntegrityStatus {
   if (!hasPassword) {
     return 'idle';
   }
 
-  if (hasMinimumLength && hasMatchingConfirmation) {
+  if (isPasswordStrong && hasMatchingConfirmation) {
     return 'ready';
   }
 
