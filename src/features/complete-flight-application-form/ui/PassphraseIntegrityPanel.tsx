@@ -46,7 +46,7 @@ export function PassphraseIntegrityPanel({
   return (
     <aside
       aria-live="polite"
-      className={cn(style.panel, themeClassNames.surface.panel)}
+      className={cn(style.panel, themeClassNames.surface.notice)}
     >
       <div className={style.header}>
         <div>

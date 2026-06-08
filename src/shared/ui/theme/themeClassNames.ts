@@ -3,18 +3,20 @@ export const themeClassNames = {
 
   surface: {
     panel:
-      'border-zinc-300 bg-white dark:border-neutral-800 dark:bg-neutral-900',
+      'border-zinc-300 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-900 dark:shadow-none',
     panelSoft:
-      'border-zinc-300 bg-zinc-50 dark:border-neutral-800 dark:bg-neutral-950',
+      'border-zinc-300 bg-zinc-50 shadow-sm dark:border-neutral-800 dark:bg-neutral-950 dark:shadow-none',
+    formSection:
+      'border-zinc-300 bg-zinc-50/95 shadow-sm dark:border-neutral-700 dark:bg-neutral-900/95 dark:shadow-none dark:ring-1 dark:ring-white/5',
     field:
-      'border-zinc-300 bg-white text-zinc-950 placeholder:text-zinc-400 dark:border-neutral-700 dark:bg-neutral-950 dark:text-zinc-100 dark:placeholder:text-neutral-500',
-    fieldSoft: 'bg-zinc-50 dark:bg-neutral-950',
+      'border-zinc-300 bg-white text-zinc-950 shadow-sm placeholder:text-zinc-400 dark:border-neutral-700 dark:bg-neutral-950 dark:text-zinc-100 dark:shadow-none dark:placeholder:text-neutral-500',
+    fieldSoft: 'bg-zinc-50/80 dark:bg-neutral-950',
     modal:
-      'border-zinc-300 bg-white dark:border-neutral-800 dark:bg-neutral-900',
+      'border-zinc-300 bg-white dark:border-neutral-700 dark:bg-neutral-950',
     notice:
-      'border-zinc-300 bg-zinc-50 dark:border-neutral-800 dark:bg-neutral-950',
+      'border-zinc-300 bg-zinc-50/95 shadow-sm dark:border-neutral-700 dark:bg-neutral-900/80 dark:shadow-none dark:ring-1 dark:ring-white/5',
     noticeAccent:
-      'border-amber-300 bg-amber-50 dark:border-cyan-500/40 dark:bg-cyan-500/10',
+      'border-amber-300 bg-amber-50/95 shadow-sm dark:border-cyan-500/40 dark:bg-cyan-950/20 dark:shadow-none dark:ring-1 dark:ring-cyan-300/10',
   },
 
   border: {
@@ -25,8 +27,8 @@ export const themeClassNames = {
 
   text: {
     primary: 'text-zinc-950 dark:text-zinc-100',
-    muted: 'text-zinc-600 dark:text-zinc-400',
-    subtle: 'text-zinc-500 dark:text-neutral-500',
+    muted: 'text-zinc-600 dark:text-neutral-300',
+    subtle: 'text-zinc-500 dark:text-neutral-400',
     label: 'text-zinc-900 dark:text-zinc-100',
     eyebrow: 'text-amber-700 dark:text-cyan-300',
     danger: 'text-red-600 dark:text-red-400',
@@ -55,7 +57,7 @@ export const themeClassNames = {
   },
 
   status: {
-    idle: 'border-zinc-300 text-zinc-500 dark:border-neutral-700 dark:text-neutral-500',
+    idle: 'border-zinc-300 text-zinc-500 dark:border-neutral-600 dark:text-neutral-400',
     warning:
       'border-amber-300 text-amber-700 dark:border-cyan-500/40 dark:text-cyan-300',
     success:
@@ -64,9 +66,9 @@ export const themeClassNames = {
 
   indicator: {
     pending:
-      'border-zinc-300 text-zinc-400 dark:border-neutral-700 dark:text-neutral-500',
+      'border-zinc-300 text-zinc-400 dark:border-neutral-600 dark:text-neutral-400',
     success:
-      'border-emerald-400 bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300',
+      'border-emerald-400 bg-emerald-50 text-emerald-700 dark:border-emerald-500/50 dark:bg-emerald-500/10 dark:text-emerald-300',
   },
 
   highlight: {

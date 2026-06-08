@@ -36,7 +36,7 @@ export function CheckboxField({
       <label
         className={cn(
           style.label,
-          themeClassNames.surface.panel,
+          themeClassNames.surface.notice,
           themeClassNames.text.muted,
           className,
         )}

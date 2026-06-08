@@ -22,7 +22,7 @@ export function FormSection({
   title,
 }: FormSectionProps) {
   return (
-    <section className={cn(style.section, themeClassNames.surface.panelSoft)}>
+    <section className={cn(style.section, themeClassNames.surface.formSection)}>
       <h3 className={cn(style.title, themeClassNames.text.primary)}>{title}</h3>
 
       {description ? (

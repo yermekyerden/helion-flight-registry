@@ -20,7 +20,7 @@ const style = {
   overlay:
     'fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/75 px-4 py-8 backdrop-blur-sm',
   dialog:
-    'app-scrollbar max-h-[calc(100vh-4rem)] w-full max-w-3xl overflow-y-auto rounded-3xl border p-6 shadow-2xl outline-none',
+    'app-scrollbar max-h-[calc(100vh-4rem)] w-full max-w-3xl overflow-y-auto rounded-3xl border p-6 shadow-2xl shadow-zinc-950/10 outline-none dark:shadow-black/70',
   header: 'flex items-start justify-between gap-4 border-b pb-5',
   eyebrow: 'text-xs font-semibold tracking-[0.25em] uppercase',
   title: 'mt-2 text-2xl font-semibold',
