@@ -1,6 +1,13 @@
+import { useState } from 'react';
+
+import type { FlightApplicationProtocol } from '@/entities/flight-application/model/flightApplication.types';
+import { AssistedFlightClearanceShell } from '@/features/submit-flight-application-assisted/ui/AssistedFlightClearanceShell';
+import { LegacyPilotIntakeShell } from '@/features/submit-flight-application-legacy/ui/LegacyPilotIntakeShell';
+import { Modal } from '@/shared/ui/modal/Modal';
 import { FlightApplicationLauncher } from '@/widgets/flight-application-launcher/FlightApplicationLauncher';
 import { FlightDossierRegistry } from '@/widgets/flight-dossier-registry/FlightDossierRegistry';
 import { RegistryStatusSummary } from '@/widgets/registry-status-summary/RegistryStatusSummary';
+
 import { stellarFlightRegistryPageContent as content } from './stellarFlightRegistryPage.content';
 
 const style = {
@@ -16,6 +23,11 @@ const style = {
 
 export function StellarFlightRegistryPage() {
   const { hero } = content;
+  const [activeProtocol, setActiveProtocol] =
+    useState<FlightApplicationProtocol | null>(null);
+
+  const isLegacyModalOpen = activeProtocol === 'legacy';
+  const isAssistedModalOpen = activeProtocol === 'assisted';
 
   return (
     <main className={style.page}>
@@ -29,9 +41,46 @@ export function StellarFlightRegistryPage() {
         </header>
 
         <RegistryStatusSummary />
-        <FlightApplicationLauncher />
+
+        <FlightApplicationLauncher
+          onOpenAssistedFlow={openAssistedFlow}
+          onOpenLegacyFlow={openLegacyFlow}
+        />
+
         <FlightDossierRegistry />
       </section>
+
+      <Modal
+        description={content.modal.legacyPilotIntake.description}
+        eyebrow={content.modal.legacyPilotIntake.eyebrow}
+        isOpen={isLegacyModalOpen}
+        onClose={closeActiveFlow}
+        title={content.modal.legacyPilotIntake.title}
+      >
+        <LegacyPilotIntakeShell />
+      </Modal>
+
+      <Modal
+        description={content.modal.assistedFlightClearance.description}
+        eyebrow={content.modal.assistedFlightClearance.eyebrow}
+        isOpen={isAssistedModalOpen}
+        onClose={closeActiveFlow}
+        title={content.modal.assistedFlightClearance.title}
+      >
+        <AssistedFlightClearanceShell />
+      </Modal>
     </main>
   );
+
+  function openLegacyFlow() {
+    setActiveProtocol('legacy');
+  }
+
+  function openAssistedFlow() {
+    setActiveProtocol('assisted');
+  }
+
+  function closeActiveFlow() {
+    setActiveProtocol(null);
+  }
 }
