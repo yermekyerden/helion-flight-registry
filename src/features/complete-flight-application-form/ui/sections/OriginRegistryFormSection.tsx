@@ -10,8 +10,8 @@ import { FormSection } from '@/shared/ui/form-section/FormSection';
 import { SelectInput } from '@/shared/ui/select-input/SelectInput';
 import { TextInput } from '@/shared/ui/text-input/TextInput';
 
-import { flightApplicationFormContent as content } from '../../model/flightApplicationForm.content';
-import type { FlightApplicationFormFieldErrors } from '../../model/flightApplicationFormFieldErrors';
+import { flightApplicationFormContent as content } from '@/features/complete-flight-application-form/model/flightApplicationForm.content';
+import type { FlightApplicationFormFieldErrors } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldErrors';
 import { SelectOptions } from './SelectOptions';
 
 type OriginRegistryFormSectionProps = {
@@ -23,6 +23,12 @@ type OriginRegistryFormSectionProps = {
   >;
   originWorldInputProps?: ComponentProps<typeof TextInput>;
 };
+
+const fieldIds = {
+  originSector: 'flight-application-origin-sector',
+  originWorld: 'flight-application-origin-world',
+  country: 'flight-application-country',
+} as const;
 
 const style = {
   fullWidth: 'md:col-span-2',
@@ -41,41 +47,59 @@ export function OriginRegistryFormSection({
     >
       <FormField
         error={errors?.originSector}
+        id={fieldIds.originSector}
         label={content.fields.originSector.label}
       >
-        <SelectInput defaultValue="" {...originSectorSelectProps}>
-          <option disabled value="">
-            {content.selectPlaceholder}
-          </option>
+        {(fieldProps) => (
+          <SelectInput
+            defaultValue=""
+            {...originSectorSelectProps}
+            {...fieldProps}
+          >
+            <option disabled value="">
+              {content.selectPlaceholder}
+            </option>
 
-          <SelectOptions options={originSectors} />
-        </SelectInput>
+            <SelectOptions options={originSectors} />
+          </SelectInput>
+        )}
       </FormField>
 
       <FormField
         error={errors?.originWorld}
+        id={fieldIds.originWorld}
         label={content.fields.originWorld.label}
       >
-        <TextInput
-          maxLength={formLimits.originWorld.maxLength}
-          placeholder={content.fields.originWorld.placeholder}
-          {...originWorldInputProps}
-        />
+        {(fieldProps) => (
+          <TextInput
+            maxLength={formLimits.originWorld.maxLength}
+            placeholder={content.fields.originWorld.placeholder}
+            {...originWorldInputProps}
+            {...fieldProps}
+          />
+        )}
       </FormField>
 
       <div className={style.fullWidth}>
         <FormField
           error={errors?.country}
           hint={content.fields.country.hint}
+          id={fieldIds.country}
           label={content.fields.country.label}
         >
-          <SelectInput defaultValue="" {...countrySelectProps}>
-            <option disabled value="">
-              {content.selectPlaceholder}
-            </option>
+          {(fieldProps) => (
+            <SelectInput
+              defaultValue=""
+              {...countrySelectProps}
+              {...fieldProps}
+            >
+              <option disabled value="">
+                {content.selectPlaceholder}
+              </option>
 
-            <SelectOptions options={originAuthorities} />
-          </SelectInput>
+              <SelectOptions options={originAuthorities} />
+            </SelectInput>
+          )}
         </FormField>
       </div>
     </FormSection>

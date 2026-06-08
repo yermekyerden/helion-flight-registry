@@ -3,6 +3,12 @@ import { formLimits } from '@/shared/config/formLimits';
 export const flightApplicationFormContent = {
   selectPlaceholder: 'Select registry value',
 
+  actions: {
+    resetButtonLabel: 'Reset packet',
+    legacySubmitButtonLabel: 'Submit dossier',
+    assistedSubmitButtonLabel: 'Run clearance check',
+  },
+
   sections: {
     pilotIdentity: {
       title: 'Pilot identity',

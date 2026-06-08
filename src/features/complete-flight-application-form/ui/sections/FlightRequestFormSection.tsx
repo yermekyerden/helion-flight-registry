@@ -8,8 +8,8 @@ import { FormField } from '@/shared/ui/form-field/FormField';
 import { FormSection } from '@/shared/ui/form-section/FormSection';
 import { SelectInput } from '@/shared/ui/select-input/SelectInput';
 
-import { flightApplicationFormContent as content } from '../../model/flightApplicationForm.content';
-import type { FlightApplicationFormFieldErrors } from '../../model/flightApplicationFormFieldErrors';
+import { flightApplicationFormContent as content } from '@/features/complete-flight-application-form/model/flightApplicationForm.content';
+import type { FlightApplicationFormFieldErrors } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldErrors';
 import { SelectOptions } from './SelectOptions';
 
 type FlightRequestFormSectionProps = {
@@ -24,6 +24,11 @@ type FlightRequestFormSectionProps = {
   >;
 };
 
+const fieldIds = {
+  destinationSector: 'flight-application-destination-sector',
+  flightPurpose: 'flight-application-flight-purpose',
+} as const;
+
 export function FlightRequestFormSection({
   destinationSectorSelectProps,
   errors,
@@ -36,28 +41,42 @@ export function FlightRequestFormSection({
     >
       <FormField
         error={errors?.destinationSector}
+        id={fieldIds.destinationSector}
         label={content.fields.destinationSector.label}
       >
-        <SelectInput defaultValue="" {...destinationSectorSelectProps}>
-          <option disabled value="">
-            {content.selectPlaceholder}
-          </option>
+        {(fieldProps) => (
+          <SelectInput
+            defaultValue=""
+            {...destinationSectorSelectProps}
+            {...fieldProps}
+          >
+            <option disabled value="">
+              {content.selectPlaceholder}
+            </option>
 
-          <SelectOptions options={originSectors} />
-        </SelectInput>
+            <SelectOptions options={originSectors} />
+          </SelectInput>
+        )}
       </FormField>
 
       <FormField
         error={errors?.flightPurpose}
+        id={fieldIds.flightPurpose}
         label={content.fields.flightPurpose.label}
       >
-        <SelectInput defaultValue="" {...flightPurposeSelectProps}>
-          <option disabled value="">
-            {content.selectPlaceholder}
-          </option>
+        {(fieldProps) => (
+          <SelectInput
+            defaultValue=""
+            {...flightPurposeSelectProps}
+            {...fieldProps}
+          >
+            <option disabled value="">
+              {content.selectPlaceholder}
+            </option>
 
-          <SelectOptions options={flightPurposes} />
-        </SelectInput>
+            <SelectOptions options={flightPurposes} />
+          </SelectInput>
+        )}
       </FormField>
     </FormSection>
   );

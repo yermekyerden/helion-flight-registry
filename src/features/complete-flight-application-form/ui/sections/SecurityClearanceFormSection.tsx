@@ -5,8 +5,8 @@ import { FormField } from '@/shared/ui/form-field/FormField';
 import { FormSection } from '@/shared/ui/form-section/FormSection';
 import { PasswordInput } from '@/shared/ui/password-input/PasswordInput';
 
-import { flightApplicationFormContent as content } from '../../model/flightApplicationForm.content';
-import type { FlightApplicationFormFieldErrors } from '../../model/flightApplicationFormFieldErrors';
+import { flightApplicationFormContent as content } from '@/features/complete-flight-application-form/model/flightApplicationForm.content';
+import type { FlightApplicationFormFieldErrors } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldErrors';
 import { PassphraseIntegrityPanel } from '../PassphraseIntegrityPanel';
 
 type SecurityClearanceFormSectionProps = {
@@ -20,6 +20,12 @@ type SecurityClearanceFormSectionProps = {
   password?: string;
   passwordInputProps?: ComponentProps<typeof PasswordInput>;
 };
+
+const fieldIds = {
+  password: 'flight-application-password',
+  confirmPassword: 'flight-application-confirm-password',
+  acceptedTerms: 'flight-application-accepted-terms',
+} as const;
 
 const style = {
   fullWidth: 'md:col-span-2',
@@ -38,21 +44,32 @@ export function SecurityClearanceFormSection({
       description={content.sections.securityClearance.description}
       title={content.sections.securityClearance.title}
     >
-      <FormField error={errors?.password} label={content.fields.password.label}>
-        <PasswordInput
-          placeholder={content.fields.password.placeholder}
-          {...passwordInputProps}
-        />
+      <FormField
+        error={errors?.password}
+        id={fieldIds.password}
+        label={content.fields.password.label}
+      >
+        {(fieldProps) => (
+          <PasswordInput
+            placeholder={content.fields.password.placeholder}
+            {...passwordInputProps}
+            {...fieldProps}
+          />
+        )}
       </FormField>
 
       <FormField
         error={errors?.confirmPassword}
+        id={fieldIds.confirmPassword}
         label={content.fields.confirmPassword.label}
       >
-        <PasswordInput
-          placeholder={content.fields.confirmPassword.placeholder}
-          {...confirmPasswordInputProps}
-        />
+        {(fieldProps) => (
+          <PasswordInput
+            placeholder={content.fields.confirmPassword.placeholder}
+            {...confirmPasswordInputProps}
+            {...fieldProps}
+          />
+        )}
       </FormField>
 
       <div className={style.fullWidth}>
@@ -64,8 +81,9 @@ export function SecurityClearanceFormSection({
 
       <div className={style.fullWidth}>
         <CheckboxField
-          error={errors?.acceptedTerms}
           {...acceptedTermsInputProps}
+          error={errors?.acceptedTerms}
+          id={fieldIds.acceptedTerms}
         >
           {content.fields.acceptedTerms.label}
         </CheckboxField>

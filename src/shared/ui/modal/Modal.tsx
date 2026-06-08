@@ -17,7 +17,7 @@ const style = {
   overlay:
     'fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 px-4 py-8 backdrop-blur-sm',
   dialog:
-    'max-h-[calc(100vh-4rem)] w-full max-w-3xl overflow-y-auto rounded-3xl border border-slate-700 bg-white p-6 shadow-2xl outline-none dark:bg-slate-900',
+    'app-scrollbar max-h-[calc(100vh-4rem)] w-full max-w-3xl overflow-y-auto rounded-3xl border border-slate-700 bg-white p-6 shadow-2xl outline-none dark:bg-slate-900',
   header:
     'flex items-start justify-between gap-4 border-b border-zinc-200 pb-5 dark:border-slate-800',
   eyebrow:

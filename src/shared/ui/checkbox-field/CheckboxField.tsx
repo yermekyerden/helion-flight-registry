@@ -22,16 +22,55 @@ export function CheckboxField({
   children,
   className,
   error,
+  id,
   ...props
 }: CheckboxFieldProps) {
+  const errorId = getCheckboxErrorId(id, error);
+  const describedBy = getCheckboxDescribedBy(
+    props['aria-describedby'],
+    errorId,
+  );
+
   return (
     <div>
       <label className={cn(style.label, className)}>
-        <input className={style.checkbox} type="checkbox" {...props} />
+        <input
+          {...props}
+          aria-describedby={describedBy}
+          aria-invalid={error ? true : props['aria-invalid']}
+          className={style.checkbox}
+          id={id}
+          type="checkbox"
+        />
+
         <span>{children}</span>
       </label>
 
-      {error ? <p className={style.error}>{error}</p> : null}
+      {error ? (
+        <p className={style.error} id={errorId} role="alert">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
+}
+
+function getCheckboxErrorId(id?: string, error?: string) {
+  if (!id || !error) {
+    return undefined;
+  }
+
+  return `${id}-error`;
+}
+
+function getCheckboxDescribedBy(describedBy?: string, errorId?: string) {
+  if (describedBy && errorId) {
+    return `${describedBy} ${errorId}`;
+  }
+
+  if (errorId) {
+    return errorId;
+  }
+
+  return describedBy;
 }

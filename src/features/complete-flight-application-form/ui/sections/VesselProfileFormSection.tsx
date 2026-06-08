@@ -8,8 +8,8 @@ import { NumberInput } from '@/shared/ui/number-input/NumberInput';
 import { SelectInput } from '@/shared/ui/select-input/SelectInput';
 import { TextInput } from '@/shared/ui/text-input/TextInput';
 
-import { flightApplicationFormContent as content } from '../../model/flightApplicationForm.content';
-import type { FlightApplicationFormFieldErrors } from '../../model/flightApplicationFormFieldErrors';
+import { flightApplicationFormContent as content } from '@/features/complete-flight-application-form/model/flightApplicationForm.content';
+import type { FlightApplicationFormFieldErrors } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldErrors';
 import { SelectOptions } from './SelectOptions';
 
 type VesselProfileFormSectionProps = {
@@ -19,6 +19,13 @@ type VesselProfileFormSectionProps = {
   vesselClassSelectProps?: Omit<ComponentProps<typeof SelectInput>, 'children'>;
   vesselNameInputProps?: ComponentProps<typeof TextInput>;
 };
+
+const fieldIds = {
+  vesselName: 'flight-application-vessel-name',
+  vesselClass: 'flight-application-vessel-class',
+  crewCapacity: 'flight-application-crew-capacity',
+  callsign: 'flight-application-callsign',
+} as const;
 
 export function VesselProfileFormSection({
   callsignInputProps,
@@ -34,50 +41,69 @@ export function VesselProfileFormSection({
     >
       <FormField
         error={errors?.vesselName}
+        id={fieldIds.vesselName}
         label={content.fields.vesselName.label}
       >
-        <TextInput
-          maxLength={formLimits.vesselName.maxLength}
-          placeholder={content.fields.vesselName.placeholder}
-          {...vesselNameInputProps}
-        />
+        {(fieldProps) => (
+          <TextInput
+            maxLength={formLimits.vesselName.maxLength}
+            placeholder={content.fields.vesselName.placeholder}
+            {...vesselNameInputProps}
+            {...fieldProps}
+          />
+        )}
       </FormField>
 
       <FormField
         error={errors?.vesselClass}
+        id={fieldIds.vesselClass}
         label={content.fields.vesselClass.label}
       >
-        <SelectInput defaultValue="" {...vesselClassSelectProps}>
-          <option disabled value="">
-            {content.selectPlaceholder}
-          </option>
+        {(fieldProps) => (
+          <SelectInput
+            defaultValue=""
+            {...vesselClassSelectProps}
+            {...fieldProps}
+          >
+            <option disabled value="">
+              {content.selectPlaceholder}
+            </option>
 
-          <SelectOptions options={vesselClasses} />
-        </SelectInput>
+            <SelectOptions options={vesselClasses} />
+          </SelectInput>
+        )}
       </FormField>
 
       <FormField
         error={errors?.crewCapacity}
+        id={fieldIds.crewCapacity}
         label={content.fields.crewCapacity.label}
       >
-        <NumberInput
-          max={formLimits.crewCapacity.max}
-          min={formLimits.crewCapacity.min}
-          placeholder={content.fields.crewCapacity.placeholder}
-          {...crewCapacityInputProps}
-        />
+        {(fieldProps) => (
+          <NumberInput
+            max={formLimits.crewCapacity.max}
+            min={formLimits.crewCapacity.min}
+            placeholder={content.fields.crewCapacity.placeholder}
+            {...crewCapacityInputProps}
+            {...fieldProps}
+          />
+        )}
       </FormField>
 
       <FormField
         error={errors?.callsign}
         hint={content.fields.callsign.hint}
+        id={fieldIds.callsign}
         label={content.fields.callsign.label}
       >
-        <TextInput
-          maxLength={formLimits.callsign.maxLength}
-          placeholder={content.fields.callsign.placeholder}
-          {...callsignInputProps}
-        />
+        {(fieldProps) => (
+          <TextInput
+            maxLength={formLimits.callsign.maxLength}
+            placeholder={content.fields.callsign.placeholder}
+            {...callsignInputProps}
+            {...fieldProps}
+          />
+        )}
       </FormField>
     </FormSection>
   );

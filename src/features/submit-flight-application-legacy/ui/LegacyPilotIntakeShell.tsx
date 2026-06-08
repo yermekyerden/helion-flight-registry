@@ -1,6 +1,5 @@
-import { FlightApplicationFormPreview } from '@/features/complete-flight-application-form/ui/FlightApplicationFormPreview';
-
 import { legacyPilotIntakeShellContent as content } from './LegacyPilotIntakeShell.content';
+import { LegacyPilotIntakeForm } from './LegacyPilotIntakeForm';
 
 const style = {
   stack: 'space-y-5',
@@ -18,7 +17,7 @@ export function LegacyPilotIntakeShell() {
         <p className={style.description}>{content.description}</p>
       </section>
 
-      <FlightApplicationFormPreview />
+      <LegacyPilotIntakeForm />
     </div>
   );
 }
