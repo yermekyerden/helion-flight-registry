@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { identityMarkers } from '../../../config/flightApplicationOptions';
-import { formLimits } from '../../../config/formLimits';
+import { identityMarkers } from '@/shared/config/flightApplicationOptions';
+import { formLimits } from '@/shared/config/formLimits';
 import { flightApplicationValidationMessages as messages } from './flightApplicationValidationMessages';
 import { imageFileSchema } from './imageFileSchema';
 import { validateEmailWithoutRegex } from './validateEmailWithoutRegex';

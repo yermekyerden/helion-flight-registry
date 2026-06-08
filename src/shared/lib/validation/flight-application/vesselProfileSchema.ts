@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { vesselClasses } from '../../../config/flightApplicationOptions';
-import { formLimits } from '../../../config/formLimits';
+import { vesselClasses } from '@/shared/config/flightApplicationOptions';
+import { formLimits } from '@/shared/config/formLimits';
 import { flightApplicationValidationMessages as messages } from './flightApplicationValidationMessages';
 
 export const vesselProfileSchema = z.object({

@@ -1,4 +1,4 @@
-import { formLimits } from '../../../config/formLimits';
+import { formLimits } from '@/shared/config/formLimits';
 
 export const flightApplicationValidationMessages = {
   pilotIdentity: {

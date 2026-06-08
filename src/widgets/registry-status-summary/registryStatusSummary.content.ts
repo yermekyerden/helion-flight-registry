@@ -1,4 +1,4 @@
-import { registryIdentity } from '../../shared/config/registryIdentity';
+import { registryIdentity } from '@/shared/config/registryIdentity';
 
 export const registryStatusSummaryContent = {
   protocolStatus: {

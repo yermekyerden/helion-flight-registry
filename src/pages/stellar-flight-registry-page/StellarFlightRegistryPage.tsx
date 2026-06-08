@@ -1,6 +1,6 @@
-import { FlightApplicationLauncher } from '../../widgets/flight-application-launcher/FlightApplicationLauncher';
-import { FlightDossierRegistry } from '../../widgets/flight-dossier-registry/FlightDossierRegistry';
-import { RegistryStatusSummary } from '../../widgets/registry-status-summary/RegistryStatusSummary';
+import { FlightApplicationLauncher } from '@/widgets/flight-application-launcher/FlightApplicationLauncher';
+import { FlightDossierRegistry } from '@/widgets/flight-dossier-registry/FlightDossierRegistry';
+import { RegistryStatusSummary } from '@/widgets/registry-status-summary/RegistryStatusSummary';
 import { stellarFlightRegistryPageContent as content } from './stellarFlightRegistryPage.content';
 
 const style = {

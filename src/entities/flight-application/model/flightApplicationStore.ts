@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { originAuthorities } from '../../../shared/config/flightApplicationOptions';
+import { originAuthorities } from '@/shared/config/flightApplicationOptions';
 import type {
   FlightApplication,
   OriginAuthority,

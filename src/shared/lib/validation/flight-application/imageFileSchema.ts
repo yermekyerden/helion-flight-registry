@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { formLimits } from '../../../config/formLimits';
+import { formLimits } from '@/shared/config/formLimits';
 import { flightApplicationValidationMessages as messages } from './flightApplicationValidationMessages';
 
 const bytesPerMegabyte = 1024 * 1024;

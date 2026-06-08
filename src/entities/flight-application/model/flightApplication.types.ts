@@ -4,7 +4,7 @@ import type {
   originAuthorities,
   originSectors,
   vesselClasses,
-} from '../../../shared/config/flightApplicationOptions';
+} from '@/shared/config/flightApplicationOptions';
 
 export type OriginSector = (typeof originSectors)[number];
 

@@ -3,7 +3,7 @@ import { z } from 'zod';
 import {
   flightPurposes,
   originSectors,
-} from '../../../config/flightApplicationOptions';
+} from '@/shared/config/flightApplicationOptions';
 import { flightApplicationValidationMessages as messages } from './flightApplicationValidationMessages';
 
 export const flightRequestSchema = z.object({

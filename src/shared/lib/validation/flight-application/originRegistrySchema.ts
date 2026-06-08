@@ -3,8 +3,8 @@ import { z } from 'zod';
 import {
   originAuthorities,
   originSectors,
-} from '../../../config/flightApplicationOptions';
-import { formLimits } from '../../../config/formLimits';
+} from '@/shared/config/flightApplicationOptions';
+import { formLimits } from '@/shared/config/formLimits';
 import { flightApplicationValidationMessages as messages } from './flightApplicationValidationMessages';
 import { validateCountryExists } from './validateCountryExists';
 

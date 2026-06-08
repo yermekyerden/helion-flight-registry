@@ -1,5 +1,5 @@
-import { selectActiveFlightDossierCount } from '../../entities/flight-application/model/flightApplicationStore.selectors';
-import { useFlightApplicationStore } from '../../entities/flight-application/model/flightApplicationStore';
+import { selectActiveFlightDossierCount } from '@/entities/flight-application/model/flightApplicationStore.selectors';
+import { useFlightApplicationStore } from '@/entities/flight-application/model/flightApplicationStore';
 import { registryStatusSummaryContent as content } from './registryStatusSummary.content';
 
 type RegistryStatusCardContent = {
