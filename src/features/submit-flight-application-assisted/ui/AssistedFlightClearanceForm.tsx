@@ -2,30 +2,28 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMemo } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 
-import { cn } from '@/shared/lib/class-name/cn';
-import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
-
 import {
   selectAddFlightApplication,
   selectOriginCountryOptions,
 } from '@/entities/flight-application/model/flightApplicationStore.selectors';
 import { useFlightApplicationStore } from '@/entities/flight-application/model/flightApplicationStore';
+import { createFlightApplicationFromFormValues } from '@/features/complete-flight-application-form/model/createFlightApplicationFromFormValues';
 import { flightApplicationFormContent as content } from '@/features/complete-flight-application-form/model/flightApplicationForm.content';
 import { flightApplicationFormFieldNames as fieldNames } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldNames';
-import { mapFlightApplicationFormToFlightApplication } from '@/features/complete-flight-application-form/model/mapFlightApplicationFormToFlightApplication';
 import { mapReactHookFormErrorsToFlightApplicationFormFieldErrors } from '@/features/complete-flight-application-form/model/mapReactHookFormErrorsToFlightApplicationFormFieldErrors';
 import { FlightRequestFormSection } from '@/features/complete-flight-application-form/ui/sections/FlightRequestFormSection';
 import { OriginRegistryFormSection } from '@/features/complete-flight-application-form/ui/sections/OriginRegistryFormSection';
 import { PilotIdentityFormSection } from '@/features/complete-flight-application-form/ui/sections/PilotIdentityFormSection';
 import { SecurityClearanceFormSection } from '@/features/complete-flight-application-form/ui/sections/SecurityClearanceFormSection';
 import { VesselProfileFormSection } from '@/features/complete-flight-application-form/ui/sections/VesselProfileFormSection';
-import { readFileAsDataUrl } from '@/shared/lib/file/readFileAsDataUrl';
+import { cn } from '@/shared/lib/class-name/cn';
 import {
   createFlightApplicationFormSchema,
   type FlightApplicationFormInputValues,
   type FlightApplicationFormValues,
 } from '@/shared/lib/validation/flight-application';
 import { Button } from '@/shared/ui/button/Button';
+import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
 
 type AssistedFlightClearanceFormProps = {
   onSubmitted?: () => void;
@@ -81,14 +79,9 @@ export function AssistedFlightClearanceForm({
     mapReactHookFormErrorsToFlightApplicationFormFieldErrors(errors);
 
   async function handleValidSubmit(formValues: FlightApplicationFormValues) {
-    const pilotPhotoDataUrl = await readFileAsDataUrl(formValues.pilotPhoto);
-
-    const flightApplication = mapFlightApplicationFormToFlightApplication({
+    const flightApplication = await createFlightApplicationFromFormValues({
       formValues,
-      id: crypto.randomUUID(),
-      pilotPhotoDataUrl,
       protocol: 'assisted',
-      submittedAt: new Date().toISOString(),
     });
 
     addFlightApplication(flightApplication);

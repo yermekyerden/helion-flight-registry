@@ -5,26 +5,24 @@ import {
   type ComponentPropsWithRef,
 } from 'react';
 
-import { cn } from '@/shared/lib/class-name/cn';
-import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
-
 import {
   selectAddFlightApplication,
   selectOriginCountryOptions,
 } from '@/entities/flight-application/model/flightApplicationStore.selectors';
 import { useFlightApplicationStore } from '@/entities/flight-application/model/flightApplicationStore';
+import { createFlightApplicationFromFormValues } from '@/features/complete-flight-application-form/model/createFlightApplicationFromFormValues';
 import { flightApplicationFormContent as content } from '@/features/complete-flight-application-form/model/flightApplicationForm.content';
 import type { FlightApplicationFormFieldErrors } from '@/features/complete-flight-application-form/model/flightApplicationFormFieldErrors';
-import { mapFlightApplicationFormToFlightApplication } from '@/features/complete-flight-application-form/model/mapFlightApplicationFormToFlightApplication';
 import { mapZodErrorToFlightApplicationFormFieldErrors } from '@/features/complete-flight-application-form/model/mapZodErrorToFlightApplicationFormFieldErrors';
 import { FlightRequestFormSection } from '@/features/complete-flight-application-form/ui/sections/FlightRequestFormSection';
 import { OriginRegistryFormSection } from '@/features/complete-flight-application-form/ui/sections/OriginRegistryFormSection';
 import { PilotIdentityFormSection } from '@/features/complete-flight-application-form/ui/sections/PilotIdentityFormSection';
 import { SecurityClearanceFormSection } from '@/features/complete-flight-application-form/ui/sections/SecurityClearanceFormSection';
 import { VesselProfileFormSection } from '@/features/complete-flight-application-form/ui/sections/VesselProfileFormSection';
-import { readFileAsDataUrl } from '@/shared/lib/file/readFileAsDataUrl';
+import { cn } from '@/shared/lib/class-name/cn';
 import { createFlightApplicationFormSchema } from '@/shared/lib/validation/flight-application';
 import { Button } from '@/shared/ui/button/Button';
+import { themeClassNames } from '@/shared/ui/theme/themeClassNames';
 
 import { readLegacyPilotIntakeFormData } from '../model/readLegacyPilotIntakeFormData';
 
@@ -127,16 +125,9 @@ export function LegacyPilotIntakeForm({
       return;
     }
 
-    const pilotPhotoDataUrl = await readFileAsDataUrl(
-      validationResult.data.pilotPhoto,
-    );
-
-    const flightApplication = mapFlightApplicationFormToFlightApplication({
+    const flightApplication = await createFlightApplicationFromFormValues({
       formValues: validationResult.data,
-      id: crypto.randomUUID(),
-      pilotPhotoDataUrl,
       protocol: 'legacy',
-      submittedAt: new Date().toISOString(),
     });
 
     addFlightApplication(flightApplication);
