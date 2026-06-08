@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { originAuthorities } from '@/shared/config/flightApplicationOptions';
+import { originAuthorities } from './flightApplicationOptions';
 import type {
   FlightApplication,
   OriginAuthority,

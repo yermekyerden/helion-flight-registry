@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import type { FlightApplicationProtocol } from '@/entities/flight-application/model/flightApplication.types';
-import { AssistedFlightClearanceShell } from '@/features/submit-flight-application-assisted/ui/AssistedFlightClearanceShell';
-import { LegacyPilotIntakeShell } from '@/features/submit-flight-application-legacy/ui/LegacyPilotIntakeShell';
+import { AssistedFlightClearanceShell } from '@/features/submit-flight-application/ui/assisted/AssistedFlightClearanceShell';
+import { LegacyPilotIntakeShell } from '@/features/submit-flight-application/ui/legacy/LegacyPilotIntakeShell';
 import { ThemeToggle } from '@/features/toggle-color-theme/ui/ThemeToggle';
 import { cn } from '@/shared/lib/class-name/cn';
 import { RegistryBackground } from '@/shared/ui/background/RegistryBackground';
