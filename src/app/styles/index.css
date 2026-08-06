@@ -1,0 +1,66 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light;
+  --app-scrollbar-thumb: rgb(245 158 11 / 55%);
+  --app-scrollbar-thumb-hover: rgb(245 158 11 / 80%);
+}
+
+.dark {
+  color-scheme: dark;
+  --app-scrollbar-thumb: rgb(34 211 238 / 45%);
+  --app-scrollbar-thumb-hover: rgb(34 211 238 / 70%);
+}
+
+body {
+  min-width: 320px;
+}
+
+.theme-change-instant :not([data-theme-toggle]),
+.theme-change-instant :not([data-theme-toggle])::before,
+.theme-change-instant :not([data-theme-toggle])::after {
+  transition: none !important;
+  transition-delay: 0ms !important;
+  animation-duration: 0ms !important;
+  animation-delay: 0ms !important;
+}
+
+.app-scrollbar {
+  scrollbar-color: var(--app-scrollbar-thumb) transparent;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+}
+
+.app-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.app-scrollbar::-webkit-scrollbar-track {
+  margin-block: 22px;
+  background: transparent;
+}
+
+.app-scrollbar::-webkit-scrollbar-thumb {
+  min-height: 48px;
+  border: 3px solid transparent;
+  border-radius: 9999px;
+  background-color: var(--app-scrollbar-thumb);
+  background-clip: content-box;
+}
+
+.app-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--app-scrollbar-thumb-hover);
+}
+
+.app-scrollbar::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.app-scrollbar::-webkit-scrollbar-corner {
+  background: transparent;
+}
